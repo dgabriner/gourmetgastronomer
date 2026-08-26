@@ -12,6 +12,7 @@ sources:
   - "gg:source:calvel-taste-of-bread"
 related:
   - "gg:ingredient:wheat-flour"
+  - "gg:topic:milling"
   - "gg:topic:dough-development"
   - "gg:topic:mixing"
   - "gg:ingredient:water"

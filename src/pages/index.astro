@@ -21,74 +21,158 @@ const roots = CONTENT_ROOTS.map((root: ContentRoot) => {
   };
 });
 
-const pathway = nodes.get("learn/sourdough");
-const atlasPlaces = nodesByKind("place", nodes.values()).slice(0, 5);
+const featuredIds = [
+  "learn/sourdough",
+  "recipes/country-loaf",
+  "baking/sourdough/san-francisco-sourdough",
+];
+const featured = featuredIds
+  .map((id) => nodes.get(id))
+  .filter((item) => Boolean(item));
+const atlasPlaces = nodesByKind("place", nodes.values())
+  .filter((place) => place.fileId.includes("bakery") || place.data.tags.includes("bread"))
+  .slice(0, 5);
+const entryCount = nodes.size;
 ---
 <Base
-  title="Gourmet Gastronomer"
-  description="A working encyclopedia of food: kitchen, formulas, and the places they come from."
+  title="Gourmet Gastronomer — Practical food knowledge from bread to San Francisco"
+  description="A source-backed food encyclopedia centered on bread, sourdough, practical kitchen skill, and the San Francisco Bay Area food world."
   permalink="/"
   includeWebsite={true}
 >
   <main class="home" id="main">
-    <p class="eyebrow">Gourmet Gastronomer</p>
-    <h1>A working encyclopedia of food</h1>
-    <p class="lede">
-      Kitchen, formulas, and the places they come from — written to be wandered,
-      learned, and kept for decades.
-    </p>
+    <header class="home-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Bread · craft · San Francisco</p>
+        <h1>Food knowledge you can use.</h1>
+        <p class="lede">
+          Understand the ingredient, read what the food is doing, and make the
+          next move with confidence. Start with sourdough, then follow the
+          connections across the whole food world.
+        </p>
+        <div class="hero-actions">
+          <a class="button-link" href="/learn/sourdough/">Start learning sourdough</a>
+          <a href="/sour-flour/">Take it into practice with Sour Flour</a>
+        </div>
+      </div>
+      <aside class="hero-note" aria-label="What makes Gourmet Gastronomer useful">
+        <p class="note-label">The house standard</p>
+        <p><strong>Simple ingredients. Serious understanding.</strong></p>
+        <p>
+          High-quality food does not need to be fussy or expensive. We teach
+          mechanism, observation, tradition, and useful next actions—with sources.
+        </p>
+        <p class="note-stat">{entryCount} connected entries and growing</p>
+      </aside>
+    </header>
 
-    <section class="module">
-      <h2>Contents</h2>
-      <ol class="contents">
+    <nav class="quick-paths" aria-label="Popular starting points">
+      <a href="/baking/sourdough/starter/"><span>Keep a starter</span><small>Feed, observe, adjust</small></a>
+      <a href="/recipes/country-loaf/"><span>Bake a country loaf</span><small>A teaching formula</small></a>
+      <a href="/baking/sourdough/troubleshooting/"><span>Fix a loaf</span><small>Read the failure</small></a>
+      <a href="/atlas/bakeries/"><span>Find Bay Area bakeries</span><small>Craft in place</small></a>
+    </nav>
+
+    <section class="feature-section" aria-labelledby="start-with-bread">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">The clearest way in</p>
+          <h2 id="start-with-bread">Start with bread</h2>
+        </div>
+        <p>
+          Bread turns a few affordable ingredients into a complete education in
+          fermentation, heat, time, touch, and place.
+        </p>
+      </div>
+      <div class="feature-grid">
+        {featured.map((item, index) => item && (
+          <article class="feature-card">
+            <p class="card-number">0{index + 1}</p>
+            <h3><a href={item.url}>{item.data.title}</a></h3>
+            <p>{item.data.summary}</p>
+            <a class="card-action" href={item.url}>Open this guide <span aria-hidden="true">→</span></a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="sour-flour-feature" aria-labelledby="sour-flour-heading">
+      <div class="sf-mark" aria-hidden="true">SF</div>
+      <div>
+        <p class="section-kicker">From the encyclopedia into the bread world</p>
+        <h2 id="sour-flour-heading">Gourmet Gastronomer led to Sour Flour.</h2>
+        <p>
+          This is where food knowledge becomes physical craft: classes, starter,
+          flour, bread, and a San Francisco community built around learning by doing.
+        </p>
+      </div>
+      <div class="sf-actions">
+        <a class="button-link button-light" href="/sour-flour/">See every connection</a>
+        <a href="https://sourflour.org/">Visit Sour Flour <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    {atlasPlaces.length > 0 && (
+      <section class="atlas-section" aria-labelledby="san-francisco-food-world">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">The local table</p>
+            <h2 id="san-francisco-food-world">The San Francisco food world</h2>
+          </div>
+          <p>Places matter because craft is practiced somewhere, by real people, with local materials and histories.</p>
+        </div>
+        <ol class="place-list">
+          {atlasPlaces.map((place) => (
+            <li>
+              <a href={place.url}>{place.data.title}</a>
+              <span>{place.data.summary}</span>
+            </li>
+          ))}
+        </ol>
+        <p><a class="text-action" href="/atlas/">Explore the full Bay Area atlas <span aria-hidden="true">→</span></a></p>
+      </section>
+    )}
+
+    <section class="library-section" aria-labelledby="explore-the-library">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Wander with purpose</p>
+          <h2 id="explore-the-library">Explore the food library</h2>
+        </div>
+        <p>Move from technique to ingredient, science, place, and back again. Every section is part of the same map.</p>
+      </div>
+      <ol class="contents contents-grid">
         {roots.map((item) => (
           <li>
-            <a href={item.url}>{item.title}</a>
-            <div>{item.summary}</div>
-            <div class="count">{item.count} {item.count === 1 ? "entry" : "entries"}</div>
+            <div class="content-card-top">
+              <a href={item.url}>{item.title}</a>
+              <span class="count">{item.count}</span>
+            </div>
+            <p>{item.summary}</p>
           </li>
         ))}
       </ol>
     </section>
 
-    {pathway && (
-      <section class="module">
-        <h2>A pathway</h2>
-        <p>
-          <a href={pathway.url}>{pathway.data.title}</a>
-          {" — "}
-          {pathway.data.summary}
-        </p>
-      </section>
-    )}
-
-    {atlasPlaces.length > 0 && (
-      <section class="module">
-        <h2>In the atlas</h2>
-        <ul>
-          {atlasPlaces.map((place) => (
-            <li>
-              <a href={place.url}>{place.data.title}</a>
-              {" — "}
-              {place.data.summary}
-            </li>
+    <section class="home-utility" aria-label="More ways to explore">
+      <div>
+        <p class="section-kicker">Know what you need?</p>
+        <h2>Search the encyclopedia</h2>
+        <form class="home-search" action="/search/" method="get" role="search">
+          <label class="visually-hidden" for="home-q">Search food topics, ingredients, formulas, and places</label>
+          <input id="home-q" name="q" type="search" placeholder="Try “bulk fermentation” or “San Francisco”" />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div>
+        <p class="section-kicker">Prefer to browse?</p>
+        <h2>Use the A–Z</h2>
+        <p class="az">
+          {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
+            <a href={`/catalog/#${letter}`}>{letter}</a>
           ))}
-        </ul>
-      </section>
-    )}
-
-    <section class="module">
-      <h2>How to read this site</h2>
-      <p>Search jumps. Breadcrumbs walk. Indexes browse. Pathways teach.</p>
-    </section>
-
-    <section class="module">
-      <h2>A–Z</h2>
-      <p class="az">
-        {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
-          <a href={`/catalog/#${letter}`}>{letter}</a>
-        ))}
-      </p>
+        </p>
+      </div>
     </section>
   </main>
 </Base>

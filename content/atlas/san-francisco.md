@@ -28,4 +28,4 @@ related:
 
 San Francisco is a place in this atlas, not a brand. It is where [[gg:place:tartine-bakery]] bakes on Guerrero Street, where [[gg:place:ferry-building]] gathers merchants at the foot of Market Street [src:gg:source:ferry-building-marketplace], and where sourdough became a civic story — argued on [[gg:topic:san-francisco-sourdough]], embodied commercially at [[gg:place:boudin-bakery]], and baked cooperatively in the Inner Sunset at [[gg:place:arizmendi-bakery]].
 
-The city eats what it does not grow. [[gg:place:marin-county]] dairies and [[gg:place:napa-valley]] vineyards are the hinterland. [[gg:place:cowgirl-creamery]] belongs to that wider Bay Area more than to a current city shop. This page is a hub, not a complete gazetteer.
+The city eats what it does not grow. [[gg:place:marin-county]] dairies and [[gg:place:napa-valley]] vineyards are the hinterland. Flour often arrives from plants just over the county line — [[gg:place:giustos]] in South San Francisco is one mill-and-processor node. [[gg:place:cowgirl-creamery]] belongs to that wider Bay Area more than to a current city shop. This page is a hub, not a complete gazetteer.

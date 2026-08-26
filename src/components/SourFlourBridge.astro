@@ -1,0 +1,19 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+<aside class:list={["sour-flour-bridge", { compact }]} aria-labelledby="sour-flour-bridge-title" data-pagefind-ignore>
+  <p class="eyebrow">From knowledge to practice</p>
+  <h2 id="sour-flour-bridge-title">Continue with Sour Flour</h2>
+  <p>
+    Gourmet Gastronomer explains the bread. Sour Flour helps you bake it, taste
+    it, and keep learning with people in San Francisco.
+  </p>
+  <div class="bridge-actions">
+    <a class="button-link" href="/sour-flour/">Explore every connection</a>
+    <a href="https://sourflour.org/baking-courses/">Find a baking course <span aria-hidden="true">↗</span></a>
+  </div>
+</aside>

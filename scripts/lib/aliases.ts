@@ -102,6 +102,12 @@ export const CULINARY_ALIASES: CulinaryAlias[] = [
   { phrase: "fructilactobacillus sanfranciscensis", canonicalId: "gg:topic:san-francisco-sourdough", kind: "related-term", confidence: "high" },
   { phrase: "napa valley", canonicalId: "gg:place:napa-valley", kind: "synonym", confidence: "high" },
   { phrase: "sonoma county", canonicalId: "gg:place:sonoma-county", kind: "synonym", confidence: "high" },
+  { phrase: "roller milling", canonicalId: "gg:topic:milling", kind: "related-term", confidence: "high" },
+  { phrase: "flour milling", canonicalId: "gg:topic:milling", kind: "synonym", confidence: "high" },
+  { phrase: "straight grade flour", canonicalId: "gg:topic:milling", kind: "related-term", confidence: "high" },
+  { phrase: "giusto's", canonicalId: "gg:place:giustos", kind: "synonym", confidence: "high" },
+  { phrase: "giustos", canonicalId: "gg:place:giustos", kind: "spelling", confidence: "high" },
+  { phrase: "vita-grain", canonicalId: "gg:place:giustos", kind: "related-term", confidence: "high" },
 ];
 
 export type AliasIndexEntry = {

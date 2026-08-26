@@ -87,8 +87,13 @@ San Francisco hub → Tartine, Boudin, Arizmendi, Ferry Building. East Bay → A
 
 ## Not building now
 
-Coffee, chocolate, beer, charcuterie, pickling/vinegar as a full tree, olive oil, restaurants as reviews, every AVA, a mill page without a verified local mill story, person biographies, homepage redesign.
+Coffee, chocolate, beer, charcuterie, pickling/vinegar as a full tree, olive oil, restaurants as reviews, every AVA, person biographies, homepage redesign.
 
-## Future opportunities (highest value)
+## Built after Mission 3 (grain)
 
-See the closing report: California grain/mills; pickling and vinegar; olive oil; a real farmers-market node distinct from the Ferry Building hall; coffee.
+- `gg:topic:milling` — roller milling, streams, ash
+- `gg:place:giustos` — South San Francisco processor, 1940 producer dating
+
+## Future opportunities (highest value remaining)
+
+Pickling and vinegar; olive oil; a farmers-market node distinct from the Ferry Building hall; coffee; California wheat farms (not only the mill).

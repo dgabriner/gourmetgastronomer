@@ -83,7 +83,7 @@ test("corpus index loads pages and flags developing pages that have no sources",
   const index = await buildCorpusIndex();
   assert.ok(index.pages.length > 10);
   assert.ok(index.byGgId.has("gg:topic:sourdough"));
-  assert.equal(index.byGgId.has("gg:topic:desired-dough-temperature"), false);
+  assert.ok(index.byGgId.has("gg:topic:desired-dough-temperature"));
   const tasting = index.byGgId.get("gg:topic:tasting");
   assert.ok(tasting);
   assert.equal(tasting.data.sources.length, 0);

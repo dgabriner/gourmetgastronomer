@@ -1,0 +1,101 @@
+---
+import Base from "../layouts/Base.astro";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Gourmet Gastronomer + Sour Flour",
+  description: "Move from bread knowledge into Sour Flour classes, breads, starter, flour, and practical help in San Francisco.",
+  url: "https://gourmetgastronomer.com/sour-flour/",
+  about: {
+    "@type": "Organization",
+    name: "Sour Flour",
+    url: "https://sourflour.org/",
+  },
+};
+---
+<Base
+  title="Sour Flour — Learn, bake, and eat bread in San Francisco"
+  description="Move from Gourmet Gastronomer bread knowledge into Sour Flour classes, breads, starter, flour, and practical help in San Francisco."
+  permalink="/sour-flour/"
+  crumbs={[{ name: "Sour Flour", url: "/sour-flour/" }]}
+  jsonLd={jsonLd}
+  currentNav="sour-flour"
+>
+  <main class="home sour-flour-page" id="main">
+    <header class="page-hero">
+      <div>
+        <p class="eyebrow">Knowledge, then practice</p>
+        <h1>Take the next step with Sour Flour</h1>
+        <p class="lede">
+          Read deeply here. Then learn with bakers, work with a living starter,
+          and eat San Francisco sourdough in the world where the craft happens.
+        </p>
+      </div>
+      <div class="hero-note">
+        <strong>One bread world, two ways in.</strong>
+        <p>Gourmet Gastronomer is the knowledge map. Sour Flour is bread in practice.</p>
+      </div>
+    </header>
+
+    <section class="module action-section" aria-labelledby="choose-next-step">
+      <p class="section-kicker">Choose your next step</p>
+      <h2 id="choose-next-step">What would you like to do?</h2>
+      <div class="action-grid">
+        <article class="action-card">
+          <p class="card-number">01</p>
+          <h3>Learn sourdough</h3>
+          <p>Build the mental model here, from starter and flour through fermentation, shaping, and baking.</p>
+          <a href="/learn/sourdough/">Start the free pathway</a>
+        </article>
+        <article class="action-card">
+          <p class="card-number">02</p>
+          <h3>Learn with a baker</h3>
+          <p>Move from reading to hands-on bread education, private instruction, or a group workshop.</p>
+          <a href="https://sourflour.org/baking-courses/">See Sour Flour courses <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="action-card">
+          <p class="card-number">03</p>
+          <h3>Get bread, starter, or flour</h3>
+          <p>Explore Sour Flour’s loaves, bagels, and pretzels, or arrange starter and specialty flour pickup.</p>
+          <div class="card-links">
+            <a href="https://sourflour.org/breads/">Explore the breads <span aria-hidden="true">↗</span></a>
+            <a href="https://sourflour.org/starter-flour/">Starter and flour <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="action-card">
+          <p class="card-number">04</p>
+          <h3>Get unstuck</h3>
+          <p>Use the troubleshooting guide here, then ask a real bread educator when your loaf needs another set of eyes.</p>
+          <div class="card-links">
+            <a href="/baking/sourdough/troubleshooting/">Troubleshoot a loaf</a>
+            <a href="https://sourflour.org/sour-flour-hotline/">Sour Flour Hotline <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="connection-section" aria-labelledby="bread-connections">
+      <div>
+        <p class="section-kicker">Follow the bread</p>
+        <h2 id="bread-connections">The useful connections</h2>
+      </div>
+      <ol class="connection-list">
+        <li><a href="/baking/sourdough/starter/">Starter</a><span>Feed it, read it, then get one from Sour Flour.</span></li>
+        <li><a href="/ingredients/wheat-flour/">Flour</a><span>Understand extraction and strength, then work with bread flour in practice.</span></li>
+        <li><a href="/baking/sourdough/bulk-fermentation/">Fermentation</a><span>Learn what changes in the dough, then feel those changes by hand.</span></li>
+        <li><a href="/baking/sourdough/san-francisco-sourdough/">San Francisco sourdough</a><span>Separate the history, microbiology, style, and living local culture.</span></li>
+        <li><a href="/atlas/bakeries/">Bay Area bakeries</a><span>Use the atlas to see how different bakers answer the same craft questions.</span></li>
+      </ol>
+    </section>
+
+    <section class="sour-flour-cta" aria-label="Visit Sour Flour">
+      <div>
+        <p class="eyebrow">Bread in the real world</p>
+        <h2>Ready to make contact?</h2>
+        <p>See current bread, course, pickup, and contact information directly from Sour Flour.</p>
+      </div>
+      <a class="button-link button-light" href="https://sourflour.org/">Visit Sour Flour <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+</Base>

@@ -35,6 +35,12 @@ export const PLACE_KINDS = [
   "organization",
 ] as const;
 export const RECIPE_SAFETY = ["canning", "fermentation", "raw"] as const;
+export const PLACE_OPERATING = [
+  "current",
+  "closed",
+  "historical",
+  "unknown",
+] as const;
 
 export type PageKind = (typeof PAGE_KINDS)[number];
 export type SourceKind = (typeof SOURCE_KINDS)[number];
@@ -90,6 +96,8 @@ export const recipeIngredientSchema = z
     prep: z.string().optional(),
     note: z.string().optional(),
     bakers_percent: z.number().optional(),
+    grams: z.number().positive().optional(),
+    stage: z.string().optional(),
   })
   .refine((row) => Boolean(row.id || row.name), {
     message: "Recipe ingredient needs id or name",
@@ -108,6 +116,7 @@ export const placeSchema = z.object({
   ...basePage,
   kind: z.literal("place"),
   place_kind: z.enum(PLACE_KINDS),
+  operating: z.enum(PLACE_OPERATING).optional(),
   website: z.url().optional(),
   part_of: ggId.optional(),
   address: z

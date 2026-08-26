@@ -11,12 +11,13 @@ tags: [science]
 related:
   - "gg:topic:fermentation"
   - "gg:topic:gluten"
+  - "gg:topic:milling"
   - "gg:topic:wild-yeast"
   - "gg:topic:lactic-acid-bacteria"
   - "gg:topic:pectin"
   - "gg:topic:acidity"
 ---
 
-Science pages are canonical homes for phenomena. [[gg:topic:fermentation]] is not a baking subfolder. [[gg:topic:gluten]] is not only bread. [[gg:topic:pectin]] is not only jam. [[gg:topic:acidity]] is sourness in tasting and pH in canning — same word, two jobs.
+Science pages are canonical homes for phenomena. [[gg:topic:fermentation]] is not a baking subfolder. [[gg:topic:gluten]] is not only bread. [[gg:topic:milling]] is not a bakery tour. [[gg:topic:pectin]] is not only jam. [[gg:topic:acidity]] is sourness in tasting and pH in canning — same word, two jobs.
 
 Craft pages apply these mechanisms. This branch explains them once.

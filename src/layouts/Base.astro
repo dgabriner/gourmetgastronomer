@@ -28,6 +28,7 @@ const {
 } = Astro.props;
 
 const canonical = canonicalUrl(permalink);
+const socialImage = canonicalUrl("/og.png");
 const jsonBlocks: Record<string, unknown>[] = [];
 if (includeWebsite) jsonBlocks.push(websiteJsonLd());
 if (crumbs.length) {
@@ -49,6 +50,8 @@ if (jsonLd) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#f6f1e8" />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title="Gourmet Gastronomer" href="/feed.xml" />
@@ -56,11 +59,21 @@ if (jsonLd) {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:site_name" content="Gourmet Gastronomer" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Gourmet Gastronomer — Bread, craft and the San Francisco food world" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Gourmet Gastronomer — Bread, craft and the San Francisco food world" />
     {jsonBlocks.map((block) => (
       <script is:inline type="application/ld+json" set:html={jsonLdScript(block)} />
-      <slot name="head" />
     ))}
+    <slot name="head" />
   </head>
   <body>
     <div class="skip-links">
@@ -79,6 +92,7 @@ if (jsonLd) {
             <a href="/learn/" aria-current={currentNav === "learn" ? "page" : undefined}>Learn</a>
             <a href="/catalog/" aria-current={currentNav === "catalog" ? "page" : undefined}>Catalog</a>
             <a href="/search/" aria-current={currentNav === "search" ? "page" : undefined}>Search</a>
+            <a href="/sour-flour/" aria-current={currentNav === "sour-flour" ? "page" : undefined}>Sour Flour</a>
           </nav>
         </div>
       </details>
@@ -88,6 +102,7 @@ if (jsonLd) {
         <a href="/learn/" aria-current={currentNav === "learn" ? "page" : undefined}>Learn</a>
         <a href="/catalog/" aria-current={currentNav === "catalog" ? "page" : undefined}>Catalog</a>
         <a href="/search/" aria-current={currentNav === "search" ? "page" : undefined}>Search</a>
+        <a href="/sour-flour/" aria-current={currentNav === "sour-flour" ? "page" : undefined}>Sour Flour</a>
       </nav>
       <form id="search" class="search-link" action="/search/" method="get" role="search">
         <label class="visually-hidden" for="q">Search the encyclopedia</label>
@@ -118,7 +133,12 @@ if (jsonLd) {
         <a href="/catalog/">Glossary</a>
         <a href="/catalog/sources/">Sources</a>
         <a href="/about/">About</a>
+        <a href="/sour-flour/">Gourmet Gastronomer + Sour Flour</a>
       </nav>
+      <p class="footer-note">
+        Food knowledge made practical in San Francisco. Continue into bread with
+        <a href="https://sourflour.org/">Sour Flour</a>.
+      </p>
     </footer>
   </body>
 </html>

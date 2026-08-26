@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import FocusWindow from "../components/FocusWindow.astro";
 import Sources from "../components/Sources.astro";
+import SourFlourBridge from "../components/SourFlourBridge.astro";
 import { buildGraph, breadcrumbsFor, focusWindow, groupRelated, pathwaysContaining, recipesUsing } from "../lib/graph";
 import { citedAndFurther, headingsFromMarkdown, renderBody, resolverFromMaps } from "../lib/markdown";
 import { eyebrowFor, nodeJsonLd, pageTitle } from "../lib/jsonld";
@@ -49,6 +50,9 @@ const children = childrenOf.get(node.fileId) ?? [];
 const prerequisites = node.data.prerequisites
   .map((id) => byGgId.get(id))
   .filter((item) => Boolean(item));
+const showSourFlourBridge =
+  node.data.tags.some((tag) => tag === "bread" || tag === "san-francisco") ||
+  node.fileId === "atlas/san-francisco";
 
 const pathwayRibbon = pathways[0];
 let previousStep: { url: string; title: string } | null = null;
@@ -279,6 +283,8 @@ if (root) titleBits.unshift(rootLabel(root));
       )}
 
       <Sources cited={sourceLists.cited} further={sourceLists.further} />
+
+      {showSourFlourBridge && <SourFlourBridge />}
 
       <p class="colophon" data-pagefind-ignore>
         {node.data.updated ? `Updated ${node.data.updated}. ` : ""}

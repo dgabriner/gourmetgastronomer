@@ -15,10 +15,11 @@ related:
   - "gg:topic:final-proof"
   - "gg:topic:dough-development"
   - "gg:topic:shaping"
+  - "gg:topic:desired-dough-temperature"
 ---
 
 Bulk fermentation is the dough’s long conversation with its microbes. In this period [[gg:topic:fermentation]] fills the dough with gas while [[gg:topic:dough-development]] continues through rest and folds.
 
-Temperature, inoculation, and dough strength change the clock. There is no universal minute count. Calvel’s technical chapters treat fermentation as a condition to observe, not a slogan [src:gg:source:calvel-taste-of-bread].
+Temperature, inoculation, and dough strength change the clock. There is no universal minute count. The mix target that sets that clock is [[gg:topic:desired-dough-temperature]]. Calvel’s technical chapters treat fermentation as a condition to observe, not a slogan [src:gg:source:calvel-taste-of-bread].
 
 When bulk is done, the dough is divided and [[gg:topic:shaping|shaped]], then given a [[gg:topic:final-proof]].

@@ -20,6 +20,8 @@ sources:
 related:
   - "gg:topic:sourdough"
   - "gg:ingredient:wheat-flour"
+  - "gg:topic:milling"
+  - "gg:place:giustos"
   - "gg:place:ferry-building"
   - "gg:place:tartine-bakery"
   - "gg:place:san-francisco"
@@ -30,6 +32,6 @@ Acme is an East Bay answer to a restaurant problem. The bakery’s own history: 
 
 That is artisan baking as infrastructure: loaves that other kitchens could serve. The company later added production in Mountain View and, in 2002, a bakery at the redeveloped [[gg:place:ferry-building]], after developers asked them to be “the village baker” for that hall [src:gg:source:acme-bread-about]. The Ferry Building remains a San Francisco door; the company’s story is Berkeley.
 
-Since 1999 Acme states it has used 100% organic flour; its about page also reports 2024 use of California-grown Yecora Rojo in whole wheat and in a share of the white blend [src:gg:source:acme-bread-about]. Those are producer claims about sourcing, useful because they tie [[gg:ingredient:wheat-flour]] to regional farms. They are not a tasting note.
+Since 1999 Acme states it has used 100% organic flour; its about page also reports 2024 use of California-grown Yecora Rojo in whole wheat and in a share of the white blend [src:gg:source:acme-bread-about]. Those are producer claims about sourcing, useful because they tie [[gg:ingredient:wheat-flour]] and [[gg:topic:milling]] to regional farms. They are not a tasting note, and they are not a claim that the bakery buys from any particular mill such as [[gg:place:giustos]].
 
 This page is not a review of the loaf versus [[gg:place:tartine-bakery]]. It is a node for professional hearth bread, organic grain, and a market hall. Hours omitted. [[gg:topic:sourdough]] and [[gg:topic:san-francisco-sourdough]] are the craft and the civic myth; Acme is mostly the former.

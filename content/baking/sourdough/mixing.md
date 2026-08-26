@@ -15,10 +15,11 @@ related:
   - "gg:topic:gluten"
   - "gg:ingredient:wheat-flour"
   - "gg:topic:levain"
+  - "gg:topic:desired-dough-temperature"
 ---
 
 Mixing is not merely stirring. It hydrates flour, distributes salt and [[gg:topic:levain]], and begins [[gg:topic:gluten]] development.
 
-How aggressively you mix changes oxidation, dough temperature, and the work left for folds later. Calvel treats mixing as a technical choice with consequences for flavor and crumb, not as a single correct speed [src:gg:source:calvel-taste-of-bread].
+How aggressively you mix changes oxidation, dough temperature, and the work left for folds later. The professional control for that heat is [[gg:topic:desired-dough-temperature]]. Calvel treats mixing as a technical choice with consequences for flavor and crumb, not as a single correct speed [src:gg:source:calvel-taste-of-bread].
 
 After mixing comes [[gg:topic:dough-development]] — strength gained in time, not only in the bowl.

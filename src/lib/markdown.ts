@@ -25,7 +25,7 @@ const renderer = new Renderer();
 renderer.heading = function heading({ tokens, depth, text }) {
   const html = this.parser.parseInline(tokens);
   const id = slugify(headingPlainText(text));
-  return `<h${depth} id="${id}">${html}</h${depth}>\n`;
+  return `<h${depth} id="${id}">${html} <a class="permalink" href="#${id}" aria-label="Permalink to this heading">#</a></h${depth}>\n`;
 };
 
 marked.use({ gfm: true, breaks: false, renderer });
