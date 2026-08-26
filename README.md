@@ -4,6 +4,8 @@ A long-lived food encyclopedia, skills library, and San Francisco / Bay Area foo
 
 The corpus lives in `content/`. The site is a static Astro 7 build.
 
+Canonical Git: [github.com/dgabriner/gourmetgastronomer](https://github.com/dgabriner/gourmetgastronomer). The live encyclopedia is [gourmetgastronomer.com](http://gourmetgastronomer.com).
+
 ## Commands
 
 ```sh

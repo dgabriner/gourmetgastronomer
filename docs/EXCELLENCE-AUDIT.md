@@ -31,7 +31,7 @@ These compound. Implement now.
 5. **Print CSS.** Recipes and formulas must survive paper: hide chrome, keep sources, URL, tables.
 6. **Heading permalinks.** On-this-page links already slugify; headings need matching `id` plus a visible permalink.
 7. **Canonical examples.** Point agents at bulk fermentation, wheat flour, DDT, country loaf, Tartine, learn-sourdough — deepen those rather than adding siblings.
-8. **One `npm run qa` command** (lint, test, build, smoke of `dist/`). No GitHub remote yet — skip CI until a remote exists.
+8. **One `npm run qa` command** (lint, test, build, smoke of `dist/`). Public Git is `dgabriner/gourmetgastronomer`; skip GitHub Actions until they are worth the noise.
 9. **Public trust.** Expand About / Method; add Editorial standards, Corrections, and Reuse (CC BY 4.0) as short public pages. Do not invent a board. Citation and discoverability runbook: [DISCOVERABILITY.md](DISCOVERABILITY.md).
 10. **Cursor OS.** Three subagents (`research-verifier`, `food-editor`, `corpus-reviewer`) plus `/add-page`. Do not add a skill that duplicates `report:graph`.
 
@@ -46,7 +46,7 @@ These compound. Implement now.
 
 ## P3 — later
 
-- GitHub Actions when a remote exists.
+- GitHub Actions on `dgabriner/gourmetgastronomer` (remote exists; workflow not yet).
 - Pathway progress UI.
 - Copy-to-clipboard for formula grams (that is JS — justify then).
 - Region folders under atlas after ~40 places.

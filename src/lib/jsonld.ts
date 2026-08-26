@@ -9,8 +9,10 @@ export const CC_BY_40 = "https://creativecommons.org/licenses/by/4.0/";
 export const SITE_DESCRIPTION =
   "A source-backed food encyclopedia centered on bread, sourdough, practical kitchen skill, and the San Francisco Bay Area food world.";
 
-/** Add the Wikidata QID URL here once an item exists. Do not invent profiles. */
-const ORGANIZATION_SAME_AS: string[] = [];
+/** Real profiles only. Add the Wikidata QID URL once an item exists. */
+const ORGANIZATION_SAME_AS: string[] = [
+  "https://github.com/dgabriner/gourmetgastronomer",
+];
 
 export function canonicalUrl(path: string): string {
   const url = new URL(path, SITE);
