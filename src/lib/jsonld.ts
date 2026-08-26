@@ -32,10 +32,18 @@ export function websiteJsonLd(): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${SITE}/#website`,
     name: "Gourmet Gastronomer",
     url: SITE,
     description:
-      "A working encyclopedia of food: kitchen, formulas, and the places they come from.",
+      "A source-backed food encyclopedia centered on bread, sourdough, practical kitchen skill, and the San Francisco Bay Area food world.",
+    inLanguage: "en-US",
+    publisher: {
+      "@type": "Organization",
+      "@id": `${SITE}/#organization`,
+      name: "Gourmet Gastronomer",
+      url: SITE,
+    },
   };
 }
 
@@ -44,15 +52,32 @@ export function nodeJsonLd(node: GraphNode): Record<string, unknown> | null {
   const data = node.data;
   const base = {
     "@context": "https://schema.org",
+    "@id": `${url}#entry`,
     name: data.title,
     description: data.summary,
     url,
+    mainEntityOfPage: url,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${SITE}/#website`,
+      name: "Gourmet Gastronomer",
+      url: SITE,
+    },
+    author: {
+      "@type": "Organization",
+      "@id": `${SITE}/#organization`,
+      name: "Gourmet Gastronomer",
+      url: SITE,
+    },
+    ...(data.updated ? { dateModified: data.updated } : {}),
+    ...(data.tags.length ? { keywords: data.tags.join(", ") } : {}),
   };
 
   if (data.kind === "recipe") {
     return {
       ...base,
       "@type": "Recipe",
+      headline: data.title,
       recipeYield: data.yield,
       recipeIngredient: data.ingredients.map((ingredient) => {
         const name = ingredient.name ?? ingredient.id ?? "";
@@ -97,6 +122,7 @@ export function nodeJsonLd(node: GraphNode): Record<string, unknown> | null {
       "@type": "LearningResource",
       learningResourceType: "pathway",
       educationalLevel: data.level,
+      teaches: data.summary,
     };
   }
 
@@ -119,6 +145,7 @@ export function nodeJsonLd(node: GraphNode): Record<string, unknown> | null {
     ...base,
     "@type": "TechArticle",
     headline: data.title,
+    inLanguage: "en-US",
   };
 }
 

@@ -15,6 +15,7 @@ interface Props {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
   currentNav?: string;
   includeWebsite?: boolean;
+  skipSectionNav?: boolean;
 }
 
 const {
@@ -25,10 +26,10 @@ const {
   jsonLd = null,
   currentNav,
   includeWebsite = false,
+  skipSectionNav = false,
 } = Astro.props;
 
 const canonical = canonicalUrl(permalink);
-const socialImage = canonicalUrl("/og.png");
 const jsonBlocks: Record<string, unknown>[] = [];
 if (includeWebsite) jsonBlocks.push(websiteJsonLd());
 if (crumbs.length) {
@@ -61,15 +62,9 @@ if (jsonLd) {
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Gourmet Gastronomer" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:image" content={socialImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Gourmet Gastronomer — Bread, craft and the San Francisco food world" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={socialImage} />
-    <meta name="twitter:image:alt" content="Gourmet Gastronomer — Bread, craft and the San Francisco food world" />
     {jsonBlocks.map((block) => (
       <script is:inline type="application/ld+json" set:html={jsonLdScript(block)} />
     ))}
@@ -79,7 +74,7 @@ if (jsonLd) {
     <div class="skip-links">
       <a href="#main">Skip to content</a>
       <a href="#search">Skip to search</a>
-      <a href="#section-nav">Skip to section nav</a>
+      {skipSectionNav && <a href="#section-nav">Skip to section nav</a>}
     </div>
     <header class="masthead">
       <a class="wordmark" href="/">Gourmet Gastronomer</a>
@@ -92,7 +87,6 @@ if (jsonLd) {
             <a href="/learn/" aria-current={currentNav === "learn" ? "page" : undefined}>Learn</a>
             <a href="/catalog/" aria-current={currentNav === "catalog" ? "page" : undefined}>Catalog</a>
             <a href="/search/" aria-current={currentNav === "search" ? "page" : undefined}>Search</a>
-            <a href="/sour-flour/" aria-current={currentNav === "sour-flour" ? "page" : undefined}>Sour Flour</a>
           </nav>
         </div>
       </details>
@@ -165,17 +159,21 @@ if (jsonLd) {
   .search-link input {
     font: inherit;
     font-family: system-ui, "Segoe UI", sans-serif;
-    font-size: 0.875rem;
+    font-size: 1rem;
     border: 1px solid var(--rule);
     background: var(--paper-deep);
     color: var(--ink);
     padding: 0.35rem 0.55rem;
-    min-height: 32px;
+    min-height: 44px;
     min-width: 12rem;
+    width: 100%;
   }
   @media (max-width: 60rem) {
     [data-desktop-nav] {
       display: none;
+    }
+    .search-link input {
+      min-width: 0;
     }
   }
   @media (min-width: 60.01rem) {
