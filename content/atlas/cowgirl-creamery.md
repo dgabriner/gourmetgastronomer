@@ -9,6 +9,7 @@ status: developing
 updated: "2026-08-25"
 tags: [cheese, atlas, bay-area]
 place_kind: creamery
+operating: current
 website: https://cowgirlcreamery.com/
 sources:
   - "gg:source:cowgirl-creamery-site"

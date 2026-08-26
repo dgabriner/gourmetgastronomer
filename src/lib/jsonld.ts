@@ -80,7 +80,8 @@ export function nodeJsonLd(node: GraphNode): Record<string, unknown> | null {
       headline: data.title,
       recipeYield: data.yield,
       recipeIngredient: data.ingredients.map((ingredient) => {
-        const name = ingredient.name ?? ingredient.id ?? "";
+        const name =
+          ingredient.name ?? ingredient.id?.split(":").slice(2).join(":") ?? "";
         return [ingredient.amount, ingredient.prep, name]
           .filter(Boolean)
           .join(" ");

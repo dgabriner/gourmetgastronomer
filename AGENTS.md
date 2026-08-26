@@ -12,17 +12,21 @@ This repository is a Git-canonical food encyclopedia. The corpus is `content/`. 
 
 ## Commands
 
-- `npm run validate` — corpus integrity (required)
-- `npm test` — validator and editorial-tooling unit tests
+- `npm run qa` — lint, unit tests, corpus validate, Astro typecheck, production build, Pagefind, then `dist/` smoke tests
+- `npm run validate` — corpus integrity (also runs as `prebuild`)
+- `npm test` — validator, editorial-tooling, and formula unit tests
 - `npm run check` — `astro check`
 - `npm run lint`
 - `npm run build` — validate, typecheck, static build, Pagefind
+- `npm run smoke` — inspect `dist/` after a build; not a substitute for `qa`
 - `npm run verify:links` — optional external URL check; do not put this in the default build
 - `npm run report:sources` — source audit (pass `--check-urls` only when investigating)
 - `npm run report:graph` — editorial graph health
 - `npm run suggest:links` — conservative internal-link and duplicate suggestions; never auto-edits prose
 
-New encyclopedia work starts with `.cursor/skills/research-topic` (`docs/RESEARCH-WORKFLOW.md`). Do not draft a page from a brief unless asked.
+New encyclopedia work starts with `.cursor/skills/research-topic` (`docs/RESEARCH-WORKFLOW.md`). Create a page with `.cursor/skills/add-page`. Deepen with `.cursor/skills/deepen-page`. Do not draft a page from a brief unless asked.
+
+Imitate the canonical examples in `docs/CONTENT-MODEL.md` (bulk fermentation, wheat flour, desired dough temperature, country loaf, Tartine, learn sourdough).
 
 ## Completeness
 

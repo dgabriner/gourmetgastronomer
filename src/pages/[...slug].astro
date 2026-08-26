@@ -3,12 +3,14 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import FocusWindow from "../components/FocusWindow.astro";
 import Sources from "../components/Sources.astro";
-import SourFlourBridge from "../components/SourFlourBridge.astro";
-import { buildGraph, breadcrumbsFor, focusWindow, groupRelated, pathwaysContaining, recipesUsing } from "../lib/graph";
+import { buildGraph, breadcrumbsFor, focusWindow, groupRelated, inboundRelated, pathwaysContaining, recipesUsing } from "../lib/graph";
 import { citedAndFurther, headingsFromMarkdown, renderBody, resolverFromMaps } from "../lib/markdown";
-import { eyebrowFor, nodeJsonLd, pageTitle } from "../lib/jsonld";
+import { summarizeFormula } from "../lib/formula";
+import { canonicalUrl, eyebrowFor, nodeJsonLd, pageTitle } from "../lib/jsonld";
 import { kindLabel, rootLabel, rootOf } from "../lib/paths";
 import type { PageKind } from "../lib/schema";
+import MediaFigure from "../components/MediaFigure.astro";
+import { illustrationFor } from "../lib/illustration";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
@@ -45,14 +47,31 @@ const headings = headingsFromMarkdown(node.body);
 const sourceLists = citedAndFurther(node, sourcesById);
 const pathways = pathwaysContaining(node.data.id, nodes.values());
 const usedIn = recipesUsing(node.data.id, nodes.values());
+const inbound = inboundRelated(node.data.id, nodes.values())
+  .filter(
+    (item) =>
+      item.fileId !== node.fileId &&
+      !node.data.related.includes(item.data.id) &&
+      !usedIn.some((recipe) => recipe.fileId === item.fileId) &&
+      !pathways.some((pathway) => pathway.fileId === item.fileId),
+  )
+  .slice(0, 6);
+const formula =
+  node.data.kind === "recipe" ? summarizeFormula(node.data, resolver) : null;
+const showBakerPct = Boolean(
+  formula?.rows.some((row) => row.bakers_percent != null),
+);
 const root = rootOf(node.fileId);
 const children = childrenOf.get(node.fileId) ?? [];
 const prerequisites = node.data.prerequisites
   .map((id) => byGgId.get(id))
   .filter((item) => Boolean(item));
-const showSourFlourBridge =
-  node.data.tags.some((tag) => tag === "bread" || tag === "san-francisco") ||
-  node.fileId === "atlas/san-francisco";
+const operatingLabel: Record<string, string> = {
+  current: "Operating",
+  closed: "Closed",
+  historical: "Historical",
+  unknown: "Uncertain",
+};
 
 const pathwayRibbon = pathways[0];
 let previousStep: { url: string; title: string } | null = null;
@@ -81,6 +100,12 @@ if (node.data.kind === "recipe" && node.data.safety) {
 }
 if (node.data.kind === "place") {
   glance.push({ label: "Kind", value: node.data.place_kind });
+  if (node.data.operating) {
+    glance.push({
+      label: "Status",
+      value: operatingLabel[node.data.operating] ?? node.data.operating,
+    });
+  }
   if (node.data.address?.locality) {
     glance.push({ label: "Place", value: node.data.address.locality });
   }
@@ -97,6 +122,15 @@ if (node.data.kind === "pathway" && node.data.level) {
 
 const titleBits = [node.data.title];
 if (root) titleBits.unshift(rootLabel(root));
+const art = illustrationFor(node.data.kind, node.data.tags, node.fileId);
+const pctMax = formula
+  ? Math.max(
+      100,
+      ...formula.rows
+        .map((row) => row.bakers_percent)
+        .filter((value): value is number => value != null),
+    )
+  : 100;
 ---
 <Base
   title={pageTitle(node.data.title, root ? [rootLabel(root)] : [])}
@@ -105,11 +139,18 @@ if (root) titleBits.unshift(rootLabel(root));
   crumbs={crumbs}
   jsonLd={nodeJsonLd(node)}
   currentNav={root === "baking" || root === "atlas" || root === "learn" ? root : "catalog"}
+  skipSectionNav={false}
 >
   <div class="page-grid">
     <article class="folio" id="main" data-pagefind-body>
-      <p class="eyebrow">{eyebrowFor(node)}</p>
-      <h1>{node.data.title}</h1>
+      <div class="folio-head">
+        <div>
+          <p class="eyebrow">{eyebrowFor(node)}</p>
+          <h1>{node.data.title}</h1>
+        </div>
+        {art && <MediaFigure name={art} class="lead-figure" />}
+      </div>
+      <p class="print-source">Printed from {canonicalUrl(node.url)}</p>
       <p class="lede">{node.data.summary}</p>
       {node.data.status === "stub" && (
         <p class="stub-note">This entry is a sketch.</p>
@@ -158,27 +199,52 @@ if (root) titleBits.unshift(rootLabel(root));
         </section>
       )}
 
-      {node.data.kind === "recipe" && (
+      {node.data.kind === "recipe" && formula && (
         <section class="module">
           <h2>Formula</h2>
-          <ul class="formula-lines">
-            {node.data.ingredients.map((ingredient) => {
-              const target = ingredient.id ? byGgId.get(ingredient.id) : undefined;
-              const name = ingredient.name ?? target?.data.title ?? ingredient.id;
-              return (
-                <li>
-                  {ingredient.amount}
-                  {ingredient.prep ? ` ${ingredient.prep}` : ""}
-                  {" "}
-                  {target ? <a href={target.url}>{name}</a> : name}
-                  {ingredient.note ? ` (${ingredient.note})` : ""}
-                  {ingredient.bakers_percent != null && (
-                    <span class="pct"> · {ingredient.bakers_percent}%</span>
+          <div class="table-scroll">
+            <table class="formula-table">
+              <thead>
+                <tr>
+                  <th>Ingredient</th>
+                  <th>Amount</th>
+                  {showBakerPct && <th>Baker’s %</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {formula.rows.map((row) => (
+                  <tr>
+                    <td>{row.url ? <a href={row.url}>{row.name}</a> : row.name}</td>
+                    <td>{row.amount}</td>
+                  {showBakerPct && (
+                    <td>
+                      {row.bakers_percent != null ? (
+                        <span class="formula-pct">
+                          <span class="pct">{row.bakers_percent}%</span>
+                          <span
+                            class="pct-track"
+                            aria-hidden="true"
+                            style={`--pct: ${(row.bakers_percent / pctMax) * 100}%`}
+                          >
+                            <span class="pct-fill"></span>
+                          </span>
+                        </span>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
                   )}
-                </li>
-              );
-            })}
-          </ul>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {(formula.hydration != null || formula.inoculation != null) && (
+            <p class="formula-derived">
+              {formula.hydration != null && <>Hydration {formula.hydration}%. </>}
+              {formula.inoculation != null && <>Inoculation {formula.inoculation}% of flour weight.</>}
+            </p>
+          )}
         </section>
       )}
 
@@ -236,6 +302,17 @@ if (root) titleBits.unshift(rootLabel(root));
         </section>
       ))}
 
+      {inbound.length > 0 && (
+        <section class="module">
+          <h2>Connected from</h2>
+          <ul>
+            {inbound.map((item) => (
+              <li><a href={item.url}>{item.data.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {pathways.length > 0 && (
         <section class="module">
           <h2>Appears in pathways</h2>
@@ -283,8 +360,6 @@ if (root) titleBits.unshift(rootLabel(root));
       )}
 
       <Sources cited={sourceLists.cited} further={sourceLists.further} />
-
-      {showSourFlourBridge && <SourFlourBridge />}
 
       <p class="colophon" data-pagefind-ignore>
         {node.data.updated ? `Updated ${node.data.updated}. ` : ""}

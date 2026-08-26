@@ -11,4 +11,6 @@
 
 Imitate the canonical examples listed in [CONTENT-MODEL.md](CONTENT-MODEL.md). Write to the standard in [EDITORIAL.md](EDITORIAL.md) and the claim types in [EVIDENCE.md](EVIDENCE.md). Do not invent URLs, quotations, hours, or addresses. Empty page modules are omitted at build time — do not fill them with placeholders.
 
-Research a new topic with `.cursor/skills/research-topic` before drafting. Deepen an existing page rather than forking a synonym ([TERMINOLOGY.md](TERMINOLOGY.md)).
+Optional HTML asides in Markdown (`cue`, `safety`, `pro-note`, `field-note`) are documented in [DESIGN.md](DESIGN.md). Do not wrap every paragraph.
+
+Research a new topic with `.cursor/skills/research-topic` before drafting. Add a page with `.cursor/skills/add-page`. Deepen an existing page rather than forking a synonym ([TERMINOLOGY.md](TERMINOLOGY.md)).

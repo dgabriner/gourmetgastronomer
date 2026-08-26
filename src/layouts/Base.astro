@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Illustration from "../components/Illustration.astro";
 import {
   breadcrumbJsonLd,
   canonicalUrl,
@@ -26,7 +27,7 @@ const {
   jsonLd = null,
   currentNav,
   includeWebsite = false,
-  skipSectionNav = false,
+  skipSectionNav = true,
 } = Astro.props;
 
 const canonical = canonicalUrl(permalink);
@@ -48,7 +49,7 @@ if (jsonLd) {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -74,35 +75,47 @@ if (jsonLd) {
     <div class="skip-links">
       <a href="#main">Skip to content</a>
       <a href="#search">Skip to search</a>
-      {skipSectionNav && <a href="#section-nav">Skip to section nav</a>}
+      {!skipSectionNav && (
+        <a href="#section-nav">Skip to section nav</a>
+      )}
     </div>
-    <header class="masthead">
-      <a class="wordmark" href="/">Gourmet Gastronomer</a>
-      <details class="nav-toggle">
-        <summary>Menu</summary>
-        <div class="nav-panel">
-          <nav class="primary-nav" aria-label="Main">
+    <div class="masthead-bar">
+      <header class="masthead-wrap">
+        <div class="masthead">
+          <a class="wordmark" href="/">
+            <Illustration name="mark" decorative class="wordmark-mark" />
+            <span class="wordmark-text">
+              <span>Gourmet</span>
+              <small>Gastronomer</small>
+            </span>
+          </a>
+          <details class="nav-toggle">
+            <summary>Menu</summary>
+            <div class="nav-panel">
+              <nav class="primary-nav" aria-label="Main">
+                <a href="/baking/" aria-current={currentNav === "baking" ? "page" : undefined}>Baking</a>
+                <a href="/atlas/" aria-current={currentNav === "atlas" ? "page" : undefined}>Atlas</a>
+                <a href="/learn/" aria-current={currentNav === "learn" ? "page" : undefined}>Learn</a>
+                <a href="/catalog/" aria-current={currentNav === "catalog" ? "page" : undefined}>Catalog</a>
+                <a href="/search/" aria-current={currentNav === "search" ? "page" : undefined}>Search</a>
+              </nav>
+            </div>
+          </details>
+          <nav class="primary-nav" aria-label="Main" data-desktop-nav>
             <a href="/baking/" aria-current={currentNav === "baking" ? "page" : undefined}>Baking</a>
             <a href="/atlas/" aria-current={currentNav === "atlas" ? "page" : undefined}>Atlas</a>
             <a href="/learn/" aria-current={currentNav === "learn" ? "page" : undefined}>Learn</a>
             <a href="/catalog/" aria-current={currentNav === "catalog" ? "page" : undefined}>Catalog</a>
             <a href="/search/" aria-current={currentNav === "search" ? "page" : undefined}>Search</a>
           </nav>
+          <form id="search" class="search-link" action="/search/" method="get" role="search">
+            <Illustration name="search" decorative />
+            <label class="visually-hidden" for="q">Search the encyclopedia</label>
+            <input id="q" name="q" type="search" placeholder="Search the encyclopedia" />
+          </form>
         </div>
-      </details>
-      <nav class="primary-nav" aria-label="Main" data-desktop-nav>
-        <a href="/baking/" aria-current={currentNav === "baking" ? "page" : undefined}>Baking</a>
-        <a href="/atlas/" aria-current={currentNav === "atlas" ? "page" : undefined}>Atlas</a>
-        <a href="/learn/" aria-current={currentNav === "learn" ? "page" : undefined}>Learn</a>
-        <a href="/catalog/" aria-current={currentNav === "catalog" ? "page" : undefined}>Catalog</a>
-        <a href="/search/" aria-current={currentNav === "search" ? "page" : undefined}>Search</a>
-        <a href="/sour-flour/" aria-current={currentNav === "sour-flour" ? "page" : undefined}>Sour Flour</a>
-      </nav>
-      <form id="search" class="search-link" action="/search/" method="get" role="search">
-        <label class="visually-hidden" for="q">Search the encyclopedia</label>
-        <input id="q" name="q" type="search" placeholder="Search the encyclopedia" />
-      </form>
-    </header>
+      </header>
+    </div>
     {crumbs.length > 0 && (
       <nav class="crumbs" aria-label="Breadcrumb">
         <ol>
@@ -121,64 +134,18 @@ if (jsonLd) {
     )}
     <slot />
     <footer class="site-footer">
-      <nav aria-label="Help">
-        <a href="/how-to-read/">How to use this site</a>
-        <a href="/method/">Method</a>
-        <a href="/catalog/">Glossary</a>
-        <a href="/catalog/sources/">Sources</a>
-        <a href="/about/">About</a>
-        <a href="/sour-flour/">Gourmet Gastronomer + Sour Flour</a>
-      </nav>
-      <p class="footer-note">
-        Food knowledge made practical in San Francisco. Continue into bread with
-        <a href="https://sourflour.org/">Sour Flour</a>.
-      </p>
+      <div class="footer-inner">
+        <nav aria-label="Help">
+          <a href="/how-to-read/">How to use this site</a>
+          <a href="/method/">Method</a>
+          <a href="/editorial/">Editorial standards</a>
+          <a href="/corrections/">Corrections</a>
+          <a href="/catalog/">Glossary</a>
+          <a href="/catalog/sources/">Sources</a>
+          <a href="/about/">About</a>
+        </nav>
+        <p class="footer-note">A working encyclopedia of food.</p>
+      </div>
     </footer>
   </body>
 </html>
-
-<style is:global>
-  [data-desktop-nav] {
-    display: flex;
-  }
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-  .search-link {
-    display: flex;
-    gap: 0.4rem;
-  }
-  .search-link input {
-    font: inherit;
-    font-family: system-ui, "Segoe UI", sans-serif;
-    font-size: 1rem;
-    border: 1px solid var(--rule);
-    background: var(--paper-deep);
-    color: var(--ink);
-    padding: 0.35rem 0.55rem;
-    min-height: 44px;
-    min-width: 12rem;
-    width: 100%;
-  }
-  @media (max-width: 60rem) {
-    [data-desktop-nav] {
-      display: none;
-    }
-    .search-link input {
-      min-width: 0;
-    }
-  }
-  @media (min-width: 60.01rem) {
-    .nav-toggle {
-      display: none;
-    }
-  }
-</style>

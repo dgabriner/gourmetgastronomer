@@ -65,3 +65,7 @@ These compound. Implement now.
 ## What this audit is not
 
 A list of fifty todos. The implementation slice is the P1 list above, plus gold-standard deepening of pages that already exist.
+
+## Implemented in this mission
+
+P1 items 1–10 are in the tree: derived formula math, `operating` on places, inbound “Connected from”, CSS primitives and print CSS, heading permalinks, canonical examples, `npm run qa`, public editorial/corrections pages, three subagents plus `/add-page`, and deepened bulk fermentation / wheat flour / country loaf. Sour Flour is lineage on `/sour-flour/`, not primary navigation.

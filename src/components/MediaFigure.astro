@@ -1,0 +1,21 @@
+---
+import Illustration from "../components/Illustration.astro";
+import {
+  illustrationCaptions,
+  type IllustrationName,
+} from "../lib/illustration";
+
+interface Props {
+  name: IllustrationName;
+  class?: string;
+  caption?: string;
+}
+
+const { name, class: className, caption = illustrationCaptions[name] } = Astro.props;
+---
+<figure class:list={["media-figure", className]}>
+  <div class="illustration-frame">
+    <Illustration name={name} />
+  </div>
+  <figcaption>{caption}</figcaption>
+</figure>

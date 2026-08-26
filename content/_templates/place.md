@@ -9,6 +9,7 @@ tags: []
 sources: []
 related: []
 place_kind: bakery
+# operating: current
 # website: https://example.com/
 # part_of: gg:place:san-francisco
 # address:
@@ -19,4 +20,4 @@ place_kind: bakery
 #   country: US
 ---
 
-Atlas node, not a directory listing. Omit hours and telephone numbers. Record address and website only from a source you verified.
+Atlas node, not a directory listing. Omit hours and telephone numbers. Record address and website only from a source you verified. `operating` is `current`, `closed`, `historical`, or `unknown` when the distinction matters. A closed bakery can still be knowledge.

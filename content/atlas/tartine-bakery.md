@@ -9,6 +9,7 @@ status: developing
 updated: "2026-08-25"
 tags: [san-francisco, bakery, bread]
 place_kind: bakery
+operating: current
 address:
   street: 600 Guerrero Street
   locality: San Francisco

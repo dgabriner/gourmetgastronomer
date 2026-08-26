@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import MediaFigure from "../components/MediaFigure.astro";
 ---
 <Base
   title="About — Gourmet Gastronomer"
@@ -8,12 +9,17 @@ import Base from "../layouts/Base.astro";
   crumbs={[{ name: "About", url: "/about/" }]}
 >
   <main class="home" id="main">
-    <p class="eyebrow">About</p>
-    <h1>About Gourmet Gastronomer</h1>
-    <p class="lede">
-      Learn enough about food that the world of food becomes more interesting,
-      understandable, navigable, and delicious.
-    </p>
+    <header class="page-hero">
+      <div>
+        <p class="eyebrow">About</p>
+        <h1>About Gourmet Gastronomer</h1>
+        <p class="lede">
+          Learn enough about food that the world of food becomes more interesting,
+          understandable, navigable, and delicious.
+        </p>
+      </div>
+      <MediaFigure name="wheat" />
+    </header>
     <div class="prose">
       <p>
         Gourmet Gastronomer is a long-lived food knowledge platform: encyclopedia,
@@ -22,13 +28,18 @@ import Base from "../layouts/Base.astro";
         site.
       </p>
       <p>
-        The idea predates, and conceptually gave rise to, Sour Flour. Sour Flour
-        became a real-world expression of one portion of this larger project —
-        learning food deeply, mastering a craft, teaching others, and building
-        community around food. Gourmet Gastronomer remains the independent
-        knowledge work; <a href="/sour-flour/">the Sour Flour bridge</a> is where
-        readers can turn bread knowledge into classes, starter, flour, practical
-        help, and bread made in San Francisco.
+        The idea predates Sour Flour. Sour Flour later became a real-world
+        expression of the bread portion of this project — learning a craft and
+        teaching it in San Francisco. Gourmet Gastronomer remains independent
+        encyclopedia work. Lineage is recorded at
+        <a href="/sour-flour/">Gourmet Gastronomer and Sour Flour</a>; it is
+        not a storefront and it is not in the main navigation.
+      </p>
+      <p>
+        How we choose sources, treat incomplete pages, and handle corrections:
+        <a href="/method/">Method</a>,
+        <a href="/editorial/">Editorial standards</a>, and
+        <a href="/corrections/">Corrections</a>.
       </p>
     </div>
   </main>

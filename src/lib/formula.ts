@@ -56,6 +56,9 @@ export function summarizeFormula(
     (row) => /starter|levain/i.test(row.name) && row.grams,
   );
 
+  // Hydration is dough water / flour line. Preferment water is not folded in;
+  // recast the formula if you need true dough hydration.
+
   return {
     rows,
     flourGrams,

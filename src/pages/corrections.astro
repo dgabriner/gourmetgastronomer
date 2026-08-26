@@ -1,0 +1,42 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base
+  title="Corrections — Gourmet Gastronomer"
+  description="How to report an error in Gourmet Gastronomer."
+  permalink="/corrections/"
+  crumbs={[{ name: "Corrections", url: "/corrections/" }]}
+>
+  <main class="home" id="main">
+    <p class="eyebrow">Corrections</p>
+    <h1>Corrections</h1>
+    <p class="lede">
+      If a fact is wrong, a source is misread, or a page is unclear, say so.
+    </p>
+    <div class="prose">
+      <p>
+        This is a Git-canonical encyclopedia. The useful report names the page
+        (title or URL), the claim, and a better source if you have one. Do not
+        send hours, menus, or telephone numbers for atlas pages; we omit those
+        on purpose because they rot.
+      </p>
+      <p>
+        Food-safety numbers (canning process times, pathogen controls) are
+        changed only against an authoritative tested process. A kitchen
+        anecdote is not enough.
+      </p>
+      <p>
+        There is no editorial board to appeal to, and we do not fabricate one.
+        Corrections land as commits. A page marked <em>sketch</em> is unfinished
+        by design; a developing page is sourced work that a human has not yet
+        marked reviewed.
+      </p>
+      <p>
+        Open an issue or pull request on the project repository if it is public,
+        or write to the maintainer if you reached this site another way. Until
+        then, use <a href="/method/">Method</a> to understand how sources are
+        chosen.
+      </p>
+    </div>
+  </main>
+</Base>

@@ -157,3 +157,28 @@ Duplicate explanations of a canonical concept belong on that concept’s page. H
 Agents may ship `stub` or `developing`. Humans set `reviewed`.
 
 A developing page should already be specific, sourced where required, and observationally useful. “Developing” is not permission to be vague.
+
+## Layered reading
+
+Keep one canonical page. The summary and opening definition are essential understanding. Observation and method are practical understanding. Mechanism, variables, and edge cases are deep understanding. Shop-scale implications belong in a `pro-note` (or a clearly marked section) that a home cook can skip. Do not fork “beginner” and “advanced” copies of the same concept unless the information cannot share a page.
+
+Recipes are teaching laboratories: they should point at the techniques, ingredients, and failure pages they demonstrate rather than restating those essays.
+
+## Review rubric
+
+Use these questions in human and agent review. Do not invent a numeric quality score.
+
+| Dimension | Question |
+| --- | --- |
+| Accuracy | Are factual claims defensible and appropriately sourced? |
+| Explanation | Does the page explain *why*, rather than merely state facts? |
+| Practical usefulness | Could someone make a better decision or perform a skill better after reading it? |
+| Specificity | Does it contain actual information rather than generic prose? |
+| Connections | Does it connect naturally into the broader food knowledge graph? |
+| Sources | Are important claims anchored in credible sources? |
+| Structure | Can it be scanned without reducing everything to shallow listicles? |
+| Distinctiveness | Would this page still be useful if search engines disappeared tomorrow? |
+| Restraint | Does it avoid saying more than the evidence supports? |
+| Food intelligence | Does it help the reader become more capable at understanding food? |
+
+Agents may propose that a page is ready for a human. Only a human sets `status: reviewed`.

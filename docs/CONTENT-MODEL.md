@@ -20,11 +20,16 @@ Agents may set stub or developing. Only a human sets `reviewed`. Stub is the onl
 
 ## Canonical examples
 
-- Topic: `content/baking/sourdough/index.md`
+Imitate these before writing similar pages. They are the house standard, not placeholders.
+
+- Conceptual topic: `content/baking/sourdough/bulk-fermentation.md`
+- Professional baking: `content/baking/desired-dough-temperature.md`
 - Ingredient: `content/ingredients/wheat-flour.md`
-- Recipe: `content/recipes/country-loaf.md` and `content/recipes/strawberry-jam.md`
+- Recipe / formula: `content/recipes/country-loaf.md`
+- Tested preserve (safety): `content/recipes/strawberry-jam.md`
 - Place: `content/atlas/tartine-bakery.md`
 - Pathway: `content/learn/sourdough.md`
+- Chapter hub: `content/baking/sourdough/index.md`
 - Source: `content/sources/calvel-taste-of-bread.yaml`
 
 Templates live in `content/_templates/` and are not published.

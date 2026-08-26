@@ -1,0 +1,220 @@
+---
+import {
+  illustrationCaptions,
+  type IllustrationName,
+} from "../lib/illustration";
+
+interface Props {
+  name: IllustrationName;
+  decorative?: boolean;
+  class?: string;
+}
+
+const { name, decorative = false, class: className } = Astro.props;
+const label = illustrationCaptions[name];
+const uid = `${name}-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<svg
+  class:list={["illustration", `illustration-${name}`, className]}
+  viewBox={name === "loaf" || name === "city" ? "0 0 320 240" : "0 0 160 160"}
+  xmlns="http://www.w3.org/2000/svg"
+  role={decorative ? undefined : "img"}
+  aria-hidden={decorative ? true : undefined}
+  aria-label={decorative ? undefined : label}
+  focusable="false"
+>
+  <defs>
+    <linearGradient id={`${uid}-crust`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c17a3a"></stop>
+      <stop offset="55%" stop-color="#8c3b18"></stop>
+      <stop offset="100%" stop-color="#5d260f"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-crumb`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fbf8f1"></stop>
+      <stop offset="100%" stop-color="#efe6d6"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-fog`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbf8f1" stop-opacity="0.15"></stop>
+      <stop offset="50%" stop-color="#d8cbb8" stop-opacity="0.55"></stop>
+      <stop offset="100%" stop-color="#f6f1e8" stop-opacity="0.1"></stop>
+    </linearGradient>
+  </defs>
+
+  {name === "loaf" && (
+    <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="160" cy="198" rx="108" ry="14" fill="#2b2218" opacity="0.12"></ellipse>
+      <path
+        d="M54 148c8-54 48-96 106-96 58 0 100 40 110 96 4 22-8 36-36 42H88c-26-4-38-18-34-42Z"
+        fill={`url(#${uid}-crust)`}
+      ></path>
+      <path
+        d="M78 146c8-40 38-72 82-72 44 0 76 30 84 72 2 14-8 24-28 28H104c-20-3-28-12-26-28Z"
+        fill="#c4a06a"
+        opacity="0.35"
+      ></path>
+      <path
+        d="M118 86c18-6 38-8 58-2"
+        stroke="#fbf8f1"
+        stroke-width="5"
+        opacity="0.55"
+      ></path>
+      <path
+        d="M108 92c4 38 10 70 14 92"
+        stroke="#5d260f"
+        stroke-width="3.5"
+      ></path>
+      <path
+        d="M112 90c18 2 28 38 32 92"
+        stroke="#f6f1e8"
+        stroke-width="2"
+        opacity="0.45"
+      ></path>
+      <circle cx="96" cy="128" r="2.2" fill="#fbf8f1" opacity="0.45"></circle>
+      <circle cx="210" cy="118" r="1.8" fill="#fbf8f1" opacity="0.4"></circle>
+      <circle cx="188" cy="152" r="1.4" fill="#fbf8f1" opacity="0.35"></circle>
+      <circle cx="142" cy="136" r="1.6" fill="#fbf8f1" opacity="0.3"></circle>
+    </g>
+  )}
+
+  {name === "starter" && (
+    <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="80" cy="148" rx="36" ry="7" fill="#2b2218" opacity="0.1"></ellipse>
+      <path d="M48 44h64v10H48Z" fill="#d8cbb8" stroke="#2b2218" stroke-width="1.5"></path>
+      <path d="M52 54c-2 8-4 18-4 36v40c0 12 8 18 32 18s32-6 32-18V90c0-18-2-28-4-36Z" fill="#fbf8f1" stroke="#2b2218" stroke-width="1.75"></path>
+      <path d="M50 96c2 28 8 44 30 44s28-16 30-44" fill="#c4a06a"></path>
+      <path d="M52 108c4 18 10 28 28 28s24-10 28-28" fill="#8c3b18" opacity="0.35"></path>
+      <path d="M54 96c8-6 18-4 26 2 10 8 22 6 30-2" stroke="#efe6d6" stroke-width="2"></path>
+      <line x1="44" y1="84" x2="116" y2="84" stroke="#8c3b18" stroke-width="3"></line>
+      <circle cx="68" cy="118" r="3" fill="#fbf8f1" opacity="0.7"></circle>
+      <circle cx="92" cy="126" r="2.4" fill="#fbf8f1" opacity="0.55"></circle>
+      <circle cx="80" cy="112" r="2" fill="#fbf8f1" opacity="0.5"></circle>
+      <circle cx="74" cy="132" r="1.6" fill="#fbf8f1" opacity="0.4"></circle>
+    </g>
+  )}
+
+  {name === "wheat" && (
+    <g fill="none" stroke="#8c3b18" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M80 148V36" stroke-width="2.2"></path>
+      <g fill="#c17a3a" stroke="#5d260f" stroke-width="1.1">
+        <ellipse cx="80" cy="42" rx="5" ry="9"></ellipse>
+        <ellipse cx="70" cy="52" rx="5" ry="9" transform="rotate(-18 70 52)"></ellipse>
+        <ellipse cx="90" cy="52" rx="5" ry="9" transform="rotate(18 90 52)"></ellipse>
+        <ellipse cx="68" cy="66" rx="5" ry="9" transform="rotate(-22 68 66)"></ellipse>
+        <ellipse cx="92" cy="66" rx="5" ry="9" transform="rotate(22 92 66)"></ellipse>
+        <ellipse cx="70" cy="80" rx="5" ry="9" transform="rotate(-18 70 80)"></ellipse>
+        <ellipse cx="90" cy="80" rx="5" ry="9" transform="rotate(18 90 80)"></ellipse>
+        <ellipse cx="80" cy="58" rx="5" ry="9"></ellipse>
+        <ellipse cx="80" cy="74" rx="5" ry="9"></ellipse>
+      </g>
+      <path d="M80 96c-18 10-28 28-22 44" stroke-width="1.6"></path>
+      <path d="M80 108c16 8 26 24 20 40" stroke-width="1.6"></path>
+    </g>
+  )}
+
+  {name === "city" && (
+    <g fill="none" stroke-linejoin="round">
+      <rect x="0" y="0" width="320" height="240" fill="#efe6d6" opacity="0"></rect>
+      <path d="M0 162c36-18 70-38 118-28 40 8 62-22 108-18 32 3 62 22 94 10v84H0Z" fill="#d8cbb8"></path>
+      <path d="M0 186c48-16 88-8 128 4 46 14 86-16 192-8v58H0Z" fill="#c4b49a"></path>
+      <path d="M0 128c40 8 54-36 96-40 48-4 58 34 108 28 36-4 52-30 116-22v40c-40-12-78 8-120 6-50-2-64-28-110-22-32 4-54 18-90 10Z" fill={`url(#${uid}-fog)`}></path>
+      <path d="M0 204h320v36H0Z" fill="#6b7c86" opacity="0.35"></path>
+      <path d="M168 96l18 66H150Z" fill="#8c3b18" opacity="0.85"></path>
+      <circle cx="176" cy="90" r="7" fill="#fbf8f1" stroke="#8c3b18" stroke-width="1.5"></circle>
+      <path d="M24 176c40-20 80-8 120 0 48 10 92-14 176-6" stroke="#6b5c4a" stroke-width="1.25" opacity="0.5"></path>
+    </g>
+  )}
+
+  {name === "mill" && (
+    <g fill="none" stroke="#2b2218" stroke-width="1.6" stroke-linejoin="round">
+      <ellipse cx="80" cy="96" rx="46" ry="46" fill="#d8cbb8"></ellipse>
+      <ellipse cx="80" cy="96" rx="18" ry="18" fill="#efe6d6"></ellipse>
+      <circle cx="80" cy="96" r="6" fill="#8c3b18"></circle>
+      <path d="M80 50v20M80 122v20M34 96h20M106 96h20M48 64l14 14M98 114l14 14M48 128l14-14M98 78l14-14" stroke="#8c3b18" stroke-width="2"></path>
+      <ellipse cx="80" cy="142" rx="40" ry="8" fill="#2b2218" opacity="0.08" stroke="none"></ellipse>
+    </g>
+  )}
+
+  {name === "jam" && (
+    <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="80" cy="146" rx="28" ry="6" fill="#2b2218" opacity="0.1"></ellipse>
+      <path d="M56 40h48v12H56Z" fill="#d8cbb8" stroke="#2b2218" stroke-width="1.5"></path>
+      <path d="M60 52c-2 6-4 16-4 28v40c0 10 8 16 24 16s24-6 24-16V80c0-12-2-22-4-28Z" fill="#fbf8f1" stroke="#2b2218" stroke-width="1.75"></path>
+      <path d="M58 78c2 30 8 46 22 46s20-16 22-46" fill="#8c3b18"></path>
+      <path d="M64 92c6 4 14 4 22-2" stroke="#c17a3a" stroke-width="2" opacity="0.7"></path>
+      <rect x="70" y="58" width="20" height="12" rx="1" fill="#efe6d6" stroke="#6b5c4a" stroke-width="1"></rect>
+    </g>
+  )}
+
+  {name === "grape" && (
+    <g stroke="#5d260f" stroke-width="1.1" stroke-linejoin="round">
+      <path d="M80 28c0 18 8 28 18 36" fill="none" stroke="#6b5c4a" stroke-width="1.6"></path>
+      <path d="M84 40c12-8 22-6 28 4" fill="none" stroke="#6b5c4a" stroke-width="1.4"></path>
+      <circle cx="72" cy="78" r="12" fill="#8c3b18"></circle>
+      <circle cx="92" cy="74" r="12" fill="#5d260f"></circle>
+      <circle cx="82" cy="94" r="12" fill="#8c3b18"></circle>
+      <circle cx="62" cy="96" r="11" fill="#5d260f"></circle>
+      <circle cx="102" cy="94" r="11" fill="#8c3b18"></circle>
+      <circle cx="74" cy="112" r="11" fill="#5d260f"></circle>
+      <circle cx="94" cy="112" r="11" fill="#8c3b18"></circle>
+      <circle cx="84" cy="128" r="10" fill="#5d260f"></circle>
+      <circle cx="68" cy="72" r="3" fill="#fbf8f1" opacity="0.35" stroke="none"></circle>
+    </g>
+  )}
+
+  {name === "cheese" && (
+    <g fill="none" stroke-linejoin="round">
+      <ellipse cx="80" cy="100" rx="54" ry="22" fill="#c17a3a" stroke="#5d260f" stroke-width="1.6"></ellipse>
+      <path d="M26 100v24c0 12 24 22 54 22s54-10 54-22v-24" fill="#e2c48a" stroke="#8c3b18" stroke-width="1.6"></path>
+      <path d="M80 78l46 28v24c0 8-20 16-46 16" fill="#f3ddb0" stroke="#8c3b18" stroke-width="1.4"></path>
+      <path d="M80 78v66" stroke="#8c3b18" stroke-width="1.2"></path>
+      <circle cx="58" cy="108" r="3" fill="#c17a3a" opacity="0.45"></circle>
+      <circle cx="70" cy="118" r="2.2" fill="#c17a3a" opacity="0.4"></circle>
+      <circle cx="96" cy="112" r="2.6" fill="#c17a3a" opacity="0.35"></circle>
+    </g>
+  )}
+
+  {name === "path" && (
+    <g fill="none" stroke="#8c3b18" stroke-width="2.2" stroke-linecap="round">
+      <circle cx="44" cy="108" r="14" fill="#fbf8f1" stroke-width="2"></circle>
+      <circle cx="80" cy="80" r="14" fill="#fbf8f1" stroke-width="2"></circle>
+      <circle cx="116" cy="52" r="14" fill="#8c3b18" stroke="#5d260f"></circle>
+      <path d="M56 100l12-16M92 72l12-16"></path>
+      <text x="44" y="113" text-anchor="middle" fill="#2b2218" stroke="none" font-size="12" font-family="Georgia, serif">1</text>
+      <text x="80" y="85" text-anchor="middle" fill="#2b2218" stroke="none" font-size="12" font-family="Georgia, serif">2</text>
+      <text x="116" y="57" text-anchor="middle" fill="#fbf8f1" stroke="none" font-size="12" font-family="Georgia, serif">3</text>
+    </g>
+  )}
+
+  {name === "pin" && (
+    <g fill="none" stroke-linejoin="round">
+      <path
+        d="M80 24c-24 0-44 19-44 44 0 32 44 68 44 68s44-36 44-68c0-25-20-44-44-44Z"
+        fill="#8c3b18"
+        stroke="#5d260f"
+        stroke-width="2"
+      ></path>
+      <circle cx="80" cy="66" r="16" fill="#fbf8f1"></circle>
+    </g>
+  )}
+
+  {name === "mark" && (
+    <g fill="none" stroke="#8c3b18" stroke-width="3">
+      <circle cx="80" cy="80" r="70"></circle>
+      <path
+        d="M40 96c6-32 28-52 40-52s34 20 40 52c2 12-6 20-20 22H60c-14-2-22-10-20-22Z"
+        fill="#8c3b18"
+        stroke="#5d260f"
+        stroke-width="2"
+      ></path>
+      <path d="M62 62c4 22 6 40 8 52" stroke="#f6f1e8" stroke-width="3"></path>
+    </g>
+  )}
+
+  {name === "search" && (
+    <g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
+      <circle cx="68" cy="68" r="28"></circle>
+      <path d="M90 90l28 28"></path>
+    </g>
+  )}
+</svg>

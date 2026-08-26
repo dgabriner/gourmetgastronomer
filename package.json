@@ -11,14 +11,16 @@
     "dev": "astro dev",
     "check": "astro check",
     "lint": "eslint src scripts",
-    "test": "tsx --test scripts/validate.test.ts scripts/editorial.test.ts",
+    "test": "tsx --test scripts/validate.test.ts scripts/editorial.test.ts scripts/formula.test.ts",
     "validate": "tsx scripts/validate.ts",
     "verify:links": "tsx scripts/verify-links.ts",
     "report:sources": "tsx scripts/report-sources.ts",
     "report:graph": "tsx scripts/report-graph.ts",
     "suggest:links": "tsx scripts/suggest-links.ts",
+    "smoke": "tsx --test scripts/smoke.ts",
     "prebuild": "npm run validate",
     "build": "astro check && astro build && pagefind --site dist",
+    "qa": "npm run lint && npm run test && npm run build && npm run smoke",
     "preview": "astro preview"
   },
   "dependencies": {

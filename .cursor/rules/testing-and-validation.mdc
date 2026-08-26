@@ -8,5 +8,7 @@ Integrity lives in `scripts/validate.ts`, using the same Zod schemas as `src/lib
 - Fail the build on duplicate IDs, dangling references, and invalid frontmatter.
 - Warnings are allowed for orphans, over-long `related`, and missing locators.
 - Do not add third-party HTTP checks to `npm run build`.
-- Unit tests: `scripts/validate.test.ts` and `scripts/editorial.test.ts` via `npm test`.
+- Unit tests: `scripts/validate.test.ts`, `scripts/editorial.test.ts`, and `scripts/formula.test.ts` via `npm test`.
+- Canonical quality gate: `npm run qa` (lint, unit tests, validate, Astro typecheck, production build, Pagefind, `dist/` smoke).
+- `npm run smoke` requires `dist/` and is not part of `npm test`.
 - Editorial reports: `npm run report:sources`, `npm run report:graph`, `npm run suggest:links`. Do not add them to `npm run build`. External URL fetching stays opt-in (`verify:links` or `report:sources -- --check-urls`).

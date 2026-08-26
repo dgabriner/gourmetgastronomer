@@ -21,12 +21,12 @@ const bakeries = placesByKind("bakery", nodes.values());
   <main class="home" id="main">
     <p class="eyebrow">Atlas</p>
     <h1>Bakeries</h1>
-    <ul>
+    <p class="lede">Craft practiced in a real place, by real people, with local flour and heat.</p>
+    <ul class="place-list">
       {bakeries.map((item) => (
         <li>
           <a href={item.url}>{item.data.title}</a>
-          {" — "}
-          {item.data.summary}
+          <span>{item.data.summary}</span>
         </li>
       ))}
     </ul>

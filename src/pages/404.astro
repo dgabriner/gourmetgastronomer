@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import MediaFigure from "../components/MediaFigure.astro";
 ---
 <Base
   title="Not found — Gourmet Gastronomer"
@@ -7,11 +8,29 @@ import Base from "../layouts/Base.astro";
   permalink="/404.html"
 >
   <main class="home" id="main">
-    <p class="eyebrow">404</p>
-    <h1>This page is not in the encyclopedia</h1>
+    <header class="page-hero">
+      <div>
+        <p class="eyebrow">404</p>
+        <h1>This page is not in the encyclopedia</h1>
+        <p class="lede">
+          The address may have moved, or it was never a page. Try a known door.
+        </p>
+      </div>
+      <MediaFigure name="path" caption="A pathway with a missing step. This URL is not in the corpus." />
+    </header>
     <p>
-      Try the <a href="/catalog/">catalog</a>, the <a href="/atlas/">atlas</a>,
-      or <a href="/search/">search</a>.
+      <a href="/catalog/">Catalog</a>
+      {" · "}
+      <a href="/search/">Search</a>
+      {" · "}
+      <a href="/learn/sourdough/">Learn sourdough</a>
+      {" · "}
+      <a href="/atlas/">Atlas</a>
+    </p>
+    <p class="az" aria-label="Catalog letters">
+      {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
+        <a href={`/catalog/#${letter}`}>{letter}</a>
+      ))}
     </p>
   </main>
 </Base>

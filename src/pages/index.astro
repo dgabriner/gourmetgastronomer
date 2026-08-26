@@ -1,9 +1,12 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
+import Illustration from "../components/Illustration.astro";
+import MediaFigure from "../components/MediaFigure.astro";
 import { buildGraph, nodesByKind, nodesByRoot } from "../lib/graph";
 import { CONTENT_ROOTS, type ContentRoot } from "../lib/schema";
 import { rootLabel } from "../lib/paths";
+import type { IllustrationName } from "../lib/illustration";
 
 const pages = await getCollection("pages");
 const sources = await getCollection("sources");
@@ -26,13 +29,28 @@ const featuredIds = [
   "recipes/country-loaf",
   "baking/sourdough/san-francisco-sourdough",
 ];
-const featured = featuredIds
-  .map((id) => nodes.get(id))
-  .filter((item) => Boolean(item));
+const featuredArt: IllustrationName[] = ["starter", "loaf", "city"];
+const featured = featuredIds.flatMap((id, index) => {
+  const item = nodes.get(id);
+  if (!item) return [];
+  return [{ item, art: featuredArt[index] }];
+});
 const atlasPlaces = nodesByKind("place", nodes.values())
   .filter((place) => place.fileId.includes("bakery") || place.data.tags.includes("bread"))
   .slice(0, 5);
 const entryCount = nodes.size;
+
+const quickPaths: {
+  href: string;
+  label: string;
+  detail: string;
+  art: IllustrationName;
+}[] = [
+  { href: "/baking/sourdough/starter/", label: "Keep a starter", detail: "Feed, observe, adjust", art: "starter" },
+  { href: "/recipes/country-loaf/", label: "Bake a country loaf", detail: "A teaching formula", art: "loaf" },
+  { href: "/baking/sourdough/troubleshooting/", label: "Fix a loaf", detail: "Read the failure", art: "loaf" },
+  { href: "/atlas/bakeries/", label: "Find Bay Area bakeries", detail: "Craft in place", art: "pin" },
+];
 ---
 <Base
   title="Gourmet Gastronomer — Practical food knowledge from bread to San Francisco"
@@ -52,8 +70,11 @@ const entryCount = nodes.size;
         </p>
         <div class="hero-actions">
           <a class="button-link" href="/learn/sourdough/">Start learning sourdough</a>
-          <a href="/sour-flour/">Take it into practice with Sour Flour</a>
+          <a href="/atlas/">Explore the Bay Area atlas</a>
         </div>
+      </div>
+      <div class="hero-visual">
+        <MediaFigure name="loaf" />
       </div>
       <aside class="hero-note" aria-label="What makes Gourmet Gastronomer useful">
         <p class="note-label">The house standard</p>
@@ -67,10 +88,13 @@ const entryCount = nodes.size;
     </header>
 
     <nav class="quick-paths" aria-label="Popular starting points">
-      <a href="/baking/sourdough/starter/"><span>Keep a starter</span><small>Feed, observe, adjust</small></a>
-      <a href="/recipes/country-loaf/"><span>Bake a country loaf</span><small>A teaching formula</small></a>
-      <a href="/baking/sourdough/troubleshooting/"><span>Fix a loaf</span><small>Read the failure</small></a>
-      <a href="/atlas/bakeries/"><span>Find Bay Area bakeries</span><small>Craft in place</small></a>
+      {quickPaths.map((path) => (
+        <a href={path.href}>
+          <Illustration name={path.art} decorative class="path-icon" />
+          <span>{path.label}</span>
+          <small>{path.detail}</small>
+        </a>
+      ))}
     </nav>
 
     <section class="feature-section" aria-labelledby="start-with-bread">
@@ -85,30 +109,19 @@ const entryCount = nodes.size;
         </p>
       </div>
       <div class="feature-grid">
-        {featured.map((item, index) => item && (
+        {featured.map((entry, index) => (
           <article class="feature-card">
+            <div class="card-visual">
+              <div class="illustration-frame">
+                <Illustration name={entry.art} decorative />
+              </div>
+            </div>
             <p class="card-number">0{index + 1}</p>
-            <h3><a href={item.url}>{item.data.title}</a></h3>
-            <p>{item.data.summary}</p>
-            <a class="card-action" href={item.url}>Open this guide <span aria-hidden="true">→</span></a>
+            <h3><a href={entry.item.url}>{entry.item.data.title}</a></h3>
+            <p>{entry.item.data.summary}</p>
+            <a class="card-action" href={entry.item.url}>Open this guide <span aria-hidden="true">→</span></a>
           </article>
         ))}
-      </div>
-    </section>
-
-    <section class="sour-flour-feature" aria-labelledby="sour-flour-heading">
-      <div class="sf-mark" aria-hidden="true">SF</div>
-      <div>
-        <p class="section-kicker">From the encyclopedia into the bread world</p>
-        <h2 id="sour-flour-heading">Gourmet Gastronomer led to Sour Flour.</h2>
-        <p>
-          This is where food knowledge becomes physical craft: classes, starter,
-          flour, bread, and a San Francisco community built around learning by doing.
-        </p>
-      </div>
-      <div class="sf-actions">
-        <a class="button-link button-light" href="/sour-flour/">See every connection</a>
-        <a href="https://sourflour.org/">Visit Sour Flour <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
