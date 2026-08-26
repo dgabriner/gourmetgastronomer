@@ -1,0 +1,34 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { buildGraph, nodesByKind } from "../../lib/graph";
+
+const pages = await getCollection("pages");
+const sources = await getCollection("sources");
+const { nodes } = buildGraph(pages, sources);
+const recipes = nodesByKind("recipe", nodes.values());
+---
+<Base
+  title="Formulas — Catalog — Gourmet Gastronomer"
+  description="Recipe and formula pages in Gourmet Gastronomer."
+  permalink="/catalog/recipes/"
+  crumbs={[
+    { name: "Catalog", url: "/catalog/" },
+    { name: "Formulas", url: "/catalog/recipes/" },
+  ]}
+  currentNav="catalog"
+>
+  <main class="home" id="main">
+    <p class="eyebrow">Catalog</p>
+    <h1>Formulas</h1>
+    <ul class="catalog-list">
+      {recipes.map((item) => (
+        <li>
+          <a href={item.url}>{item.data.title}</a>
+          {" — "}
+          {item.data.summary}
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>

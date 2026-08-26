@@ -1,0 +1,70 @@
+---
+import type { FocusWindow } from "../lib/graph";
+
+interface Props {
+  window: FocusWindow;
+  headings: { depth: number; slug: string; text: string }[];
+  related: { label: string; items: { url: string; title: string }[] }[];
+}
+
+const { window: focus, headings, related } = Astro.props;
+const showToc = headings.length >= 3;
+---
+<aside class="margin" id="section-nav">
+  <section aria-labelledby="in-this-section">
+    <h2 id="in-this-section">In this section</h2>
+    <ul>
+      {focus.parent && (
+        <li><a href={focus.parent.url}>{focus.parent.data.title}</a></li>
+      )}
+      <li class="current">
+        <a href={focus.current.url} aria-current="page">{focus.current.data.title}</a>
+      </li>
+      {focus.siblings.map((sibling) => (
+        <li><a href={sibling.url}>{sibling.data.title}</a></li>
+      ))}
+    </ul>
+    {focus.siblingOverflow > 0 && focus.parent && (
+      <p>
+        <a href={focus.parent.url}>All in {focus.parent.data.title}</a>
+      </p>
+    )}
+    {focus.children.length > 0 && (
+      <ul>
+        {focus.children.map((child) => (
+          <li><a href={child.url}>{child.data.title}</a></li>
+        ))}
+      </ul>
+    )}
+    {focus.childOverflow > 0 && (
+      <p>Further entries continue in the chapter.</p>
+    )}
+  </section>
+
+  {showToc && (
+    <section aria-labelledby="on-this-page">
+      <h2 id="on-this-page">On this page</h2>
+      <ul>
+        {headings.map((heading) => (
+          <li><a href={`#${heading.slug}`}>{heading.text}</a></li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {related.length > 0 && (
+    <section aria-labelledby="also-consult">
+      <h2 id="also-consult">Also consult</h2>
+      {related.map((group) => (
+        <div>
+          <p>{group.label}</p>
+          <ul>
+            {group.items.map((item) => (
+              <li><a href={item.url}>{item.title}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+  )}
+</aside>

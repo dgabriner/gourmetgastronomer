@@ -1,0 +1,11 @@
+---
+description: Project architecture — stack, URLs, static generation, what not to add
+alwaysApply: false
+---
+
+Follow `docs/ARCHITECTURE.md` and `docs/INFORMATION-ARCHITECTURE.md`.
+
+- Content lives in `content/`, not a CMS or database.
+- Do not add Starlight, React, MDX, Tailwind, view transitions, or a client router.
+- Do not render a site-wide navigation tree.
+- Trailing slashes always. Article pages must not require JavaScript.

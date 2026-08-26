@@ -1,0 +1,63 @@
+---
+import type { GraphSource } from "../lib/graph";
+
+interface Props {
+  cited: { source: GraphSource; locators: string[] }[];
+  further: GraphSource[];
+}
+
+const { cited, further } = Astro.props;
+if (cited.length === 0 && further.length === 0) return;
+
+function sourceLine(source: GraphSource, locators: string[] = []) {
+  const data = source.data;
+  const bits = [
+    data.authors.length ? data.authors.join(", ") : null,
+    data.title,
+    data.publisher,
+    data.year ? String(data.year) : null,
+    data.isbn ? `ISBN ${data.isbn}` : null,
+    locators.length ? locators.join("; ") : null,
+  ].filter(Boolean);
+  return bits.join(". ");
+}
+---
+<section class="module" aria-labelledby="sources-heading" data-pagefind-ignore>
+  <h2 id="sources-heading">Sources & further exploration</h2>
+  {cited.length > 0 && (
+    <div>
+      <h3>Cited in this article</h3>
+      <ul>
+        {cited.map(({ source, locators }) => (
+          <li id={source.data.id.replaceAll(":", "-")}>
+            {sourceLine(source, locators)}
+            {source.data.url && (
+              <>
+                {" "}
+                <a href={source.data.url}>{source.data.url}</a>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+  {further.length > 0 && (
+    <div>
+      <h3>Further exploration</h3>
+      <ul>
+        {further.map((source) => (
+          <li>
+            {sourceLine(source)}
+            {source.data.url && (
+              <>
+                {" "}
+                <a href={source.data.url}>{source.data.url}</a>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</section>

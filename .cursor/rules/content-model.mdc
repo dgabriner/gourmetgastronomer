@@ -1,0 +1,12 @@
+---
+description: Content model, IDs, kinds, and relationships
+globs: content/**
+alwaysApply: false
+---
+
+Follow `docs/CONTENT-MODEL.md`. Canonical examples are listed there.
+
+- IDs are `gg:<kind>:<kebab-slug>` and immutable.
+- Author only `related` and optional `prerequisites`.
+- Parent/children come from the filesystem.
+- `person` is allowed in the schema but not required in the seed.

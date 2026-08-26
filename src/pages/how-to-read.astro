@@ -1,0 +1,22 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base
+  title="How to use this site — Gourmet Gastronomer"
+  description="Search jumps. Breadcrumbs walk. Indexes browse. Pathways teach."
+  permalink="/how-to-read/"
+  crumbs={[{ name: "How to use this site", url: "/how-to-read/" }]}
+>
+  <main class="home" id="main">
+    <p class="eyebrow">Reading</p>
+    <h1>How to use this site</h1>
+    <div class="prose">
+      <p><strong>Search</strong> jumps to a word or idea. Press Enter from the masthead, or open Search. It needs JavaScript; the catalog does not.</p>
+      <p><strong>Breadcrumbs</strong> walk the tree: they tell you where you are.</p>
+      <p><strong>In this section</strong> shows the parent, siblings, and children of the current page — never the whole corpus.</p>
+      <p><strong>Also consult</strong> crosses the tree: flour, fermentation, a bakery, a formula.</p>
+      <p><strong>Pathways</strong> are curated sequences. They point at canonical pages rather than duplicating them.</p>
+      <p><strong>Sources</strong> are first-class. Follow them when a claim matters.</p>
+    </div>
+  </main>
+</Base>

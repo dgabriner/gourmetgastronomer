@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { buildGraph } from "../../lib/graph";
+
+const pages = await getCollection("pages");
+const sources = await getCollection("sources");
+buildGraph(pages, sources);
+const records = sources
+  .map((entry) => entry.data)
+  .sort((a, b) => a.title.localeCompare(b.title));
+---
+<Base
+  title="Sources — Catalog — Gourmet Gastronomer"
+  description="Citation records used across Gourmet Gastronomer."
+  permalink="/catalog/sources/"
+  crumbs={[
+    { name: "Catalog", url: "/catalog/" },
+    { name: "Sources", url: "/catalog/sources/" },
+  ]}
+  currentNav="catalog"
+>
+  <main class="home" id="main">
+    <p class="eyebrow">Catalog</p>
+    <h1>Sources</h1>
+    <ul>
+      {records.map((source) => (
+        <li>
+          <strong>{source.title}</strong>
+          {source.authors.length ? ` — ${source.authors.join(", ")}` : ""}
+          {source.year ? ` (${source.year})` : ""}
+          {source.url && (
+            <>
+              {" "}
+              <a href={source.url}>{source.url}</a>
+            </>
+          )}
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>

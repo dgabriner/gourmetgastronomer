@@ -1,0 +1,290 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import FocusWindow from "../components/FocusWindow.astro";
+import Sources from "../components/Sources.astro";
+import { buildGraph, breadcrumbsFor, focusWindow, groupRelated, pathwaysContaining, recipesUsing } from "../lib/graph";
+import { citedAndFurther, headingsFromMarkdown, renderBody, resolverFromMaps } from "../lib/markdown";
+import { eyebrowFor, nodeJsonLd, pageTitle } from "../lib/jsonld";
+import { kindLabel, rootLabel, rootOf } from "../lib/paths";
+import type { PageKind } from "../lib/schema";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+  return pages.map((entry) => ({
+    params: { slug: entry.id },
+    props: { fileId: entry.id },
+  }));
+}
+
+const { fileId } = Astro.props;
+const pages = await getCollection("pages");
+const sources = await getCollection("sources");
+const { nodes, byGgId, sourcesById, childrenOf } = buildGraph(pages, sources);
+const node = nodes.get(fileId);
+if (!node) throw new Error(`Missing page ${fileId}`);
+
+const crumbs = breadcrumbsFor(node, nodes).map((item) => ({
+  name: item.data.title,
+  url: item.url,
+}));
+const focus = focusWindow(node, nodes, childrenOf);
+const relatedGroups = [...groupRelated(node, byGgId).entries()].map(
+  ([kind, items]) => ({
+    label: kindLabel(kind as PageKind),
+    items: items.slice(0, 8).map((item) => ({
+      url: item.url,
+      title: item.data.title,
+    })),
+  }),
+);
+const resolver = resolverFromMaps(byGgId, sourcesById);
+const html = renderBody(node.body, resolver);
+const headings = headingsFromMarkdown(node.body);
+const sourceLists = citedAndFurther(node, sourcesById);
+const pathways = pathwaysContaining(node.data.id, nodes.values());
+const usedIn = recipesUsing(node.data.id, nodes.values());
+const root = rootOf(node.fileId);
+const children = childrenOf.get(node.fileId) ?? [];
+const prerequisites = node.data.prerequisites
+  .map((id) => byGgId.get(id))
+  .filter((item) => Boolean(item));
+
+const pathwayRibbon = pathways[0];
+let previousStep: { url: string; title: string } | null = null;
+let nextStep: { url: string; title: string } | null = null;
+if (pathwayRibbon && pathwayRibbon.data.kind === "pathway") {
+  const ids = pathwayRibbon.data.steps.map((step) => step.id);
+  const index = ids.indexOf(node.data.id);
+  if (index >= 0) {
+    if (index > 0) {
+      const prev = byGgId.get(ids[index - 1]);
+      if (prev) previousStep = { url: prev.url, title: prev.data.title };
+    }
+    if (index < ids.length - 1) {
+      const next = byGgId.get(ids[index + 1]);
+      if (next) nextStep = { url: next.url, title: next.data.title };
+    }
+  }
+}
+
+const glance: { label: string; value: string }[] = [];
+if (node.data.kind === "recipe" && node.data.yield) {
+  glance.push({ label: "Yield", value: node.data.yield });
+}
+if (node.data.kind === "recipe" && node.data.safety) {
+  glance.push({ label: "Safety", value: node.data.safety });
+}
+if (node.data.kind === "place") {
+  glance.push({ label: "Kind", value: node.data.place_kind });
+  if (node.data.address?.locality) {
+    glance.push({ label: "Place", value: node.data.address.locality });
+  }
+}
+if (node.data.kind === "ingredient" && node.data.also_called.length) {
+  glance.push({ label: "Also called", value: node.data.also_called.join(", ") });
+}
+if (node.data.kind === "topic" && node.data.level) {
+  glance.push({ label: "Level", value: node.data.level });
+}
+if (node.data.kind === "pathway" && node.data.level) {
+  glance.push({ label: "Level", value: node.data.level });
+}
+
+const titleBits = [node.data.title];
+if (root) titleBits.unshift(rootLabel(root));
+---
+<Base
+  title={pageTitle(node.data.title, root ? [rootLabel(root)] : [])}
+  description={node.data.summary}
+  permalink={node.url}
+  crumbs={crumbs}
+  jsonLd={nodeJsonLd(node)}
+  currentNav={root === "baking" || root === "atlas" || root === "learn" ? root : "catalog"}
+>
+  <div class="page-grid">
+    <article class="folio" id="main" data-pagefind-body>
+      <p class="eyebrow">{eyebrowFor(node)}</p>
+      <h1>{node.data.title}</h1>
+      <p class="lede">{node.data.summary}</p>
+      {node.data.status === "stub" && (
+        <p class="stub-note">This entry is a sketch.</p>
+      )}
+      {pathwayRibbon && (
+        <p class="pathway-ribbon">
+          Appears in <a href={pathwayRibbon.url}>{pathwayRibbon.data.title}</a>
+          {previousStep && (
+            <>
+              {" · "}
+              <a href={previousStep.url}>Previous: {previousStep.title}</a>
+            </>
+          )}
+          {nextStep && (
+            <>
+              {" · "}
+              <a href={nextStep.url}>Next: {nextStep.title}</a>
+            </>
+          )}
+        </p>
+      )}
+
+      <div
+        class="prose"
+        data-pagefind-meta={`title:${node.data.title}`}
+        set:html={html}
+      />
+      <span hidden data-pagefind-filter={`kind:${node.data.kind}`}></span>
+      <span hidden data-pagefind-filter={`root:${root ?? "other"}`}></span>
+      <span hidden data-pagefind-filter={`status:${node.data.status}`}></span>
+      {node.data.kind === "place" && (
+        <span hidden data-pagefind-filter={`place_kind:${node.data.place_kind}`}></span>
+      )}
+
+      {glance.length > 0 && (
+        <section class="module">
+          <h2>At a glance</h2>
+          <dl class="glance">
+            {glance.map((row) => (
+              <div>
+                <dt>{row.label}</dt>
+                <dd>{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {node.data.kind === "recipe" && (
+        <section class="module">
+          <h2>Formula</h2>
+          <ul class="formula-lines">
+            {node.data.ingredients.map((ingredient) => {
+              const target = ingredient.id ? byGgId.get(ingredient.id) : undefined;
+              const name = ingredient.name ?? target?.data.title ?? ingredient.id;
+              return (
+                <li>
+                  {ingredient.amount}
+                  {ingredient.prep ? ` ${ingredient.prep}` : ""}
+                  {" "}
+                  {target ? <a href={target.url}>{name}</a> : name}
+                  {ingredient.note ? ` (${ingredient.note})` : ""}
+                  {ingredient.bakers_percent != null && (
+                    <span class="pct"> · {ingredient.bakers_percent}%</span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      {node.data.kind === "place" && (node.data.address || node.data.website) && (
+        <section class="module">
+          <h2>Where</h2>
+          {node.data.address && (
+            <p>
+              {[
+                node.data.address.street,
+                node.data.address.locality,
+                node.data.address.region,
+                node.data.address.postal,
+              ]
+                .filter(Boolean)
+                .join(", ")}
+            </p>
+          )}
+          {node.data.website && (
+            <p><a href={node.data.website}>{node.data.website}</a></p>
+          )}
+        </section>
+      )}
+
+      {prerequisites.length > 0 && (
+        <section class="module">
+          <h2>Prerequisites</h2>
+          <ul>
+            {prerequisites.map((item) => item && (
+              <li><a href={item.url}>{item.data.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {usedIn.length > 0 && (
+        <section class="module">
+          <h2>Formulas</h2>
+          <ul>
+            {usedIn.map((item) => (
+              <li><a href={item.url}>{item.data.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {relatedGroups.map((group) => (
+        <section class="module">
+          <h2>{group.label === "Topic" ? "Related topics" : group.label}</h2>
+          <ul>
+            {group.items.map((item) => (
+              <li><a href={item.url}>{item.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      {pathways.length > 0 && (
+        <section class="module">
+          <h2>Appears in pathways</h2>
+          <ul>
+            {pathways.map((item) => (
+              <li><a href={item.url}>{item.data.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {node.data.kind === "pathway" && (
+        <section class="module">
+          <h2>Sequence</h2>
+          <ol>
+            {node.data.steps.map((step) => {
+              const target = byGgId.get(step.id);
+              return (
+                <li>
+                  {target ? (
+                    <a href={target.url}>{step.as ?? target.data.title}</a>
+                  ) : (
+                    step.as ?? step.id
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
+
+      {children.length > 0 && (
+        <section class="module">
+          <h2>In this chapter</h2>
+          <ul>
+            {children.map((child) => (
+              <li>
+                <a href={child.url}>{child.data.title}</a>
+                {" — "}
+                {child.data.summary}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <Sources cited={sourceLists.cited} further={sourceLists.further} />
+
+      <p class="colophon" data-pagefind-ignore>
+        {node.data.updated ? `Updated ${node.data.updated}. ` : ""}
+        {node.data.id}
+      </p>
+    </article>
+    <FocusWindow window={focus} headings={headings} related={relatedGroups} />
+  </div>
+</Base>

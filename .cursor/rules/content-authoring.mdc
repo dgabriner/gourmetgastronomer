@@ -1,0 +1,13 @@
+---
+description: How to write and place encyclopedia pages
+globs: content/**/*.md
+alwaysApply: false
+---
+
+Follow `docs/AUTHORING.md`. Copy `content/_templates/` and imitate canonical pages in `docs/CONTENT-MODEL.md`.
+
+- Do not invent facts or URLs.
+- Do not set `status: reviewed`.
+- Keep `related` to 8 or fewer.
+- Quote IDs in YAML (`id: "gg:topic:sourdough"`) because colons are significant.
+- Run `npm run validate` after authoring.

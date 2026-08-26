@@ -1,0 +1,166 @@
+---
+import "../styles/global.css";
+import {
+  breadcrumbJsonLd,
+  canonicalUrl,
+  jsonLdScript,
+  websiteJsonLd,
+} from "../lib/jsonld";
+
+interface Props {
+  title: string;
+  description: string;
+  permalink: string;
+  crumbs?: { name: string; url: string }[];
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
+  currentNav?: string;
+  includeWebsite?: boolean;
+}
+
+const {
+  title,
+  description,
+  permalink,
+  crumbs = [],
+  jsonLd = null,
+  currentNav,
+  includeWebsite = false,
+} = Astro.props;
+
+const canonical = canonicalUrl(permalink);
+const jsonBlocks: Record<string, unknown>[] = [];
+if (includeWebsite) jsonBlocks.push(websiteJsonLd());
+if (crumbs.length) {
+  jsonBlocks.push(
+    breadcrumbJsonLd([
+      { name: "Gourmet Gastronomer", url: "/" },
+      ...crumbs,
+    ]),
+  );
+}
+if (jsonLd) {
+  jsonBlocks.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
+}
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Gourmet Gastronomer" href="/feed.xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    {jsonBlocks.map((block) => (
+      <script is:inline type="application/ld+json" set:html={jsonLdScript(block)} />
+      <slot name="head" />
+    ))}
+  </head>
+  <body>
+    <div class="skip-links">
+      <a href="#main">Skip to content</a>
+      <a href="#search">Skip to search</a>
+      <a href="#section-nav">Skip to section nav</a>
+    </div>
+    <header class="masthead">
+      <a class="wordmark" href="/">Gourmet Gastronomer</a>
+      <details class="nav-toggle">
+        <summary>Menu</summary>
+        <div class="nav-panel">
+          <nav class="primary-nav" aria-label="Main">
+            <a href="/baking/" aria-current={currentNav === "baking" ? "page" : undefined}>Baking</a>
+            <a href="/atlas/" aria-current={currentNav === "atlas" ? "page" : undefined}>Atlas</a>
+            <a href="/learn/" aria-current={currentNav === "learn" ? "page" : undefined}>Learn</a>
+            <a href="/catalog/" aria-current={currentNav === "catalog" ? "page" : undefined}>Catalog</a>
+            <a href="/search/" aria-current={currentNav === "search" ? "page" : undefined}>Search</a>
+          </nav>
+        </div>
+      </details>
+      <nav class="primary-nav" aria-label="Main" data-desktop-nav>
+        <a href="/baking/" aria-current={currentNav === "baking" ? "page" : undefined}>Baking</a>
+        <a href="/atlas/" aria-current={currentNav === "atlas" ? "page" : undefined}>Atlas</a>
+        <a href="/learn/" aria-current={currentNav === "learn" ? "page" : undefined}>Learn</a>
+        <a href="/catalog/" aria-current={currentNav === "catalog" ? "page" : undefined}>Catalog</a>
+        <a href="/search/" aria-current={currentNav === "search" ? "page" : undefined}>Search</a>
+      </nav>
+      <form id="search" class="search-link" action="/search/" method="get" role="search">
+        <label class="visually-hidden" for="q">Search the encyclopedia</label>
+        <input id="q" name="q" type="search" placeholder="Search the encyclopedia" />
+      </form>
+    </header>
+    {crumbs.length > 0 && (
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          {crumbs.map((crumb, index) => (
+            <li>
+              {index === crumbs.length - 1 ? (
+                <span aria-current="page">{crumb.name}</span>
+              ) : (
+                <a href={crumb.url}>{crumb.name}</a>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    <slot />
+    <footer class="site-footer">
+      <nav aria-label="Help">
+        <a href="/how-to-read/">How to use this site</a>
+        <a href="/method/">Method</a>
+        <a href="/catalog/">Glossary</a>
+        <a href="/catalog/sources/">Sources</a>
+        <a href="/about/">About</a>
+      </nav>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  [data-desktop-nav] {
+    display: flex;
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .search-link {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .search-link input {
+    font: inherit;
+    font-family: system-ui, "Segoe UI", sans-serif;
+    font-size: 0.875rem;
+    border: 1px solid var(--rule);
+    background: var(--paper-deep);
+    color: var(--ink);
+    padding: 0.35rem 0.55rem;
+    min-height: 32px;
+    min-width: 12rem;
+  }
+  @media (max-width: 60rem) {
+    [data-desktop-nav] {
+      display: none;
+    }
+  }
+  @media (min-width: 60.01rem) {
+    .nav-toggle {
+      display: none;
+    }
+  }
+</style>

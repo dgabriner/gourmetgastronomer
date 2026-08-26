@@ -1,0 +1,39 @@
+{
+  "name": "gourmet-gastronomer",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Gourmet Gastronomer — a long-lived food knowledge encyclopedia and Bay Area food atlas.",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "lint": "eslint src scripts",
+    "test": "tsx --test scripts/validate.test.ts scripts/editorial.test.ts",
+    "validate": "tsx scripts/validate.ts",
+    "verify:links": "tsx scripts/verify-links.ts",
+    "report:sources": "tsx scripts/report-sources.ts",
+    "report:graph": "tsx scripts/report-graph.ts",
+    "suggest:links": "tsx scripts/suggest-links.ts",
+    "prebuild": "npm run validate",
+    "build": "astro check && astro build && pagefind --site dist",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.7",
+    "eslint": "^10.9.1",
+    "eslint-plugin-astro": "^3.1.0",
+    "marked": "^18.0.11",
+    "pagefind": "^1.5.2",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.68.0",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.12"
+  }
+}

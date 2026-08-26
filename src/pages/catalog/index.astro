@@ -1,0 +1,68 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { buildGraph } from "../../lib/graph";
+
+const pages = await getCollection("pages");
+const sources = await getCollection("sources");
+const { nodes } = buildGraph(pages, sources);
+const entries = [...nodes.values()].sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const grouped = new Map<string, typeof entries>();
+for (const letter of letters) grouped.set(letter, []);
+for (const entry of entries) {
+  const letter = entry.data.title.charAt(0).toUpperCase();
+  const bucket = grouped.get(letter) ?? grouped.get("A");
+  if (bucket) bucket.push(entry);
+}
+---
+<Base
+  title="Catalog — Gourmet Gastronomer"
+  description="A–Z catalog of Gourmet Gastronomer entries."
+  permalink="/catalog/"
+  crumbs={[{ name: "Catalog", url: "/catalog/" }]}
+  currentNav="catalog"
+>
+  <main class="home" id="main">
+    <p class="eyebrow">Catalog</p>
+    <h1>A–Z</h1>
+    <p class="lede">Every published entry, in one alphabet.</p>
+    <p>
+      <a href="/catalog/ingredients/">Ingredients</a>
+      {" · "}
+      <a href="/catalog/recipes/">Formulas</a>
+      {" · "}
+      <a href="/catalog/places/">Places</a>
+      {" · "}
+      <a href="/catalog/sources/">Sources</a>
+      {" · "}
+      <a href="/catalog/tags/fermentation/">Fermentation</a>
+    </p>
+    <p class="az">
+      {letters.map((letter) => (
+        <a href={`#${letter}`}>{letter}</a>
+      ))}
+    </p>
+    {letters.map((letter) => {
+      const list = grouped.get(letter) ?? [];
+      if (list.length === 0) return null;
+      return (
+        <section class="module" id={letter}>
+          <h2>{letter}</h2>
+          <ul class="catalog-list">
+            {list.map((item) => (
+              <li>
+                <a href={item.url}>{item.data.title}</a>
+                {" "}
+                <span class="count">{item.data.kind}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    })}
+  </main>
+</Base>

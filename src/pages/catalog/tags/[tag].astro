@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../../layouts/Base.astro";
+import { buildGraph, nodesByTag } from "../../../lib/graph";
+
+export function getStaticPaths() {
+  return [{ params: { tag: "fermentation" } }];
+}
+
+const { tag } = Astro.params;
+const pages = await getCollection("pages");
+const sources = await getCollection("sources");
+const { nodes } = buildGraph(pages, sources);
+const tagged = nodesByTag(tag ?? "", nodes.values());
+---
+<Base
+  title={`${tag} — Catalog — Gourmet Gastronomer`}
+  description={`Entries tagged ${tag}.`}
+  permalink={`/catalog/tags/${tag}/`}
+  crumbs={[
+    { name: "Catalog", url: "/catalog/" },
+    { name: tag ?? "Tag", url: `/catalog/tags/${tag}/` },
+  ]}
+  currentNav="catalog"
+>
+  <main class="home" id="main">
+    <p class="eyebrow">Catalog</p>
+    <h1>{tag}</h1>
+    <ul class="catalog-list">
+      {tagged.map((item) => (
+        <li>
+          <a href={item.url}>{item.data.title}</a>
+          {" — "}
+          {item.data.summary}
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>

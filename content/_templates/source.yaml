@@ -1,0 +1,11 @@
+id: "gg:source:example"
+kind: web
+title: Example source
+# authors: []
+# publisher:
+# year: 2026
+# isbn:
+# doi:
+url: https://example.com/
+verified: "2026-08-25"
+note: Why this source is here. Never invent a URL to look complete.

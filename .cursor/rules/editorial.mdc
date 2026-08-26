@@ -1,0 +1,13 @@
+---
+description: Editorial quality, evidence discipline, and research workflow for encyclopedia pages
+globs: content/**/*.md,docs/EDITORIAL.md,docs/EVIDENCE.md
+alwaysApply: false
+---
+
+Follow `docs/EDITORIAL.md` and `docs/EVIDENCE.md`. Research workflow: `docs/RESEARCH-WORKFLOW.md`.
+
+- Reject generic AI food writing. Teach mechanism, observation, variables, and failure modes.
+- Observe, don't just time.
+- Never improvise food-safety numbers.
+- Never set `status: reviewed`.
+- Prefer deepening a canonical ID over creating a duplicate page.

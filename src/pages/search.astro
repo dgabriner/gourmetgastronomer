@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+
+const query = Astro.url.searchParams.get("q") ?? "";
+---
+<Base
+  title="Search — Gourmet Gastronomer"
+  description="Search the Gourmet Gastronomer encyclopedia."
+  permalink="/search/"
+  crumbs={[{ name: "Search", url: "/search/" }]}
+  currentNav="search"
+>
+  <link slot="head" rel="stylesheet" href="/pagefind/pagefind-component-ui.css" />
+  <main class="home" id="main">
+    <p class="eyebrow">Search</p>
+    <h1>Search the encyclopedia</h1>
+    <p class="search-fallback">
+      Search needs JavaScript. Without it, use the
+      <a href="/catalog/">catalog</a> or the <a href="/atlas/">atlas</a>.
+    </p>
+    <div class="search-pagefind">
+      <pagefind-config faceted preload></pagefind-config>
+      <pagefind-input placeholder="Search the encyclopedia" autofocus></pagefind-input>
+      <div class="search-filters">
+        <pagefind-filter-dropdown filter="kind" label="Kind"></pagefind-filter-dropdown>
+        <pagefind-filter-dropdown filter="root" label="Section"></pagefind-filter-dropdown>
+        <pagefind-filter-dropdown filter="place_kind" label="Place kind"></pagefind-filter-dropdown>
+        <pagefind-filter-dropdown filter="status" label="Status"></pagefind-filter-dropdown>
+      </div>
+      <pagefind-summary></pagefind-summary>
+      <pagefind-results></pagefind-results>
+    </div>
+    {query && <p class="search-query">Looking for: {query}</p>}
+  </main>
+</Base>
+
+<script is:inline type="module">
+  import "/pagefind/pagefind-component-ui.js";
+  const q = new URLSearchParams(location.search).get("q");
+  if (q) {
+    await customElements.whenDefined("pagefind-input");
+    const instance = window.PagefindComponents?.getInstanceManager?.()?.getInstance("default");
+    instance?.triggerSearch(q);
+  }
+</script>

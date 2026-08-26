@@ -1,0 +1,12 @@
+---
+description: Source records and citation syntax
+globs: content/sources/**,content/**/*.md
+alwaysApply: false
+---
+
+Follow `docs/SOURCES.md`.
+
+- Add a YAML record in `content/sources/` before citing a work.
+- Cite with `[src:gg:source:…]`.
+- Never fabricate a URL to complete a record.
+- External link checks are `npm run verify:links` only.

@@ -1,0 +1,94 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { buildGraph, nodesByKind, nodesByRoot } from "../lib/graph";
+import { CONTENT_ROOTS, type ContentRoot } from "../lib/schema";
+import { rootLabel } from "../lib/paths";
+
+const pages = await getCollection("pages");
+const sources = await getCollection("sources");
+const { nodes } = buildGraph(pages, sources);
+
+const roots = CONTENT_ROOTS.map((root: ContentRoot) => {
+  const index = nodes.get(root);
+  const count = nodesByRoot(root, nodes.values()).length;
+  return {
+    root,
+    title: index?.data.title ?? rootLabel(root),
+    summary: index?.data.summary ?? "",
+    url: index?.url ?? `/${root}/`,
+    count,
+  };
+});
+
+const pathway = nodes.get("learn/sourdough");
+const atlasPlaces = nodesByKind("place", nodes.values()).slice(0, 5);
+---
+<Base
+  title="Gourmet Gastronomer"
+  description="A working encyclopedia of food: kitchen, formulas, and the places they come from."
+  permalink="/"
+  includeWebsite={true}
+>
+  <main class="home" id="main">
+    <p class="eyebrow">Gourmet Gastronomer</p>
+    <h1>A working encyclopedia of food</h1>
+    <p class="lede">
+      Kitchen, formulas, and the places they come from — written to be wandered,
+      learned, and kept for decades.
+    </p>
+
+    <section class="module">
+      <h2>Contents</h2>
+      <ol class="contents">
+        {roots.map((item) => (
+          <li>
+            <a href={item.url}>{item.title}</a>
+            <div>{item.summary}</div>
+            <div class="count">{item.count} {item.count === 1 ? "entry" : "entries"}</div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    {pathway && (
+      <section class="module">
+        <h2>A pathway</h2>
+        <p>
+          <a href={pathway.url}>{pathway.data.title}</a>
+          {" — "}
+          {pathway.data.summary}
+        </p>
+      </section>
+    )}
+
+    {atlasPlaces.length > 0 && (
+      <section class="module">
+        <h2>In the atlas</h2>
+        <ul>
+          {atlasPlaces.map((place) => (
+            <li>
+              <a href={place.url}>{place.data.title}</a>
+              {" — "}
+              {place.data.summary}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="module">
+      <h2>How to read this site</h2>
+      <p>Search jumps. Breadcrumbs walk. Indexes browse. Pathways teach.</p>
+    </section>
+
+    <section class="module">
+      <h2>A–Z</h2>
+      <p class="az">
+        {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
+          <a href={`/catalog/#${letter}`}>{letter}</a>
+        ))}
+      </p>
+    </section>
+  </main>
+</Base>
