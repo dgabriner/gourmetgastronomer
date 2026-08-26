@@ -9,6 +9,10 @@ interface Props {
 const { cited, further } = Astro.props;
 if (cited.length === 0 && further.length === 0) return;
 
+function doiHref(doi: string): string {
+  return doi.startsWith("http") ? doi : `https://doi.org/${doi}`;
+}
+
 function sourceLine(source: GraphSource, locators: string[] = []) {
   const data = source.data;
   const bits = [
@@ -31,7 +35,13 @@ function sourceLine(source: GraphSource, locators: string[] = []) {
         {cited.map(({ source, locators }) => (
           <li id={source.data.id.replaceAll(":", "-")}>
             {sourceLine(source, locators)}
-            {source.data.url && (
+            {source.data.doi && (
+              <>
+                {". DOI "}
+                <a href={doiHref(source.data.doi)}>{source.data.doi}</a>
+              </>
+            )}
+            {source.data.url && source.data.url !== doiHref(source.data.doi ?? "") && (
               <>
                 {" "}
                 <a href={source.data.url}>{source.data.url}</a>
@@ -49,7 +59,13 @@ function sourceLine(source: GraphSource, locators: string[] = []) {
         {further.map((source) => (
           <li>
             {sourceLine(source)}
-            {source.data.url && (
+            {source.data.doi && (
+              <>
+                {". DOI "}
+                <a href={doiHref(source.data.doi)}>{source.data.doi}</a>
+              </>
+            )}
+            {source.data.url && source.data.url !== doiHref(source.data.doi ?? "") && (
               <>
                 {" "}
                 <a href={source.data.url}>{source.data.url}</a>

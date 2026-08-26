@@ -32,7 +32,7 @@ These compound. Implement now.
 6. **Heading permalinks.** On-this-page links already slugify; headings need matching `id` plus a visible permalink.
 7. **Canonical examples.** Point agents at bulk fermentation, wheat flour, DDT, country loaf, Tartine, learn-sourdough — deepen those rather than adding siblings.
 8. **One `npm run qa` command** (lint, test, build, smoke of `dist/`). No GitHub remote yet — skip CI until a remote exists.
-9. **Public trust.** Expand About / Method; add Editorial standards and Corrections as short public pages. Do not invent a board.
+9. **Public trust.** Expand About / Method; add Editorial standards, Corrections, and Reuse (CC BY 4.0) as short public pages. Do not invent a board. Citation and discoverability runbook: [DISCOVERABILITY.md](DISCOVERABILITY.md).
 10. **Cursor OS.** Three subagents (`research-verifier`, `food-editor`, `corpus-reviewer`) plus `/add-page`. Do not add a skill that duplicates `report:graph`.
 
 ## P2 — professional polish
@@ -68,4 +68,4 @@ A list of fifty todos. The implementation slice is the P1 list above, plus gold-
 
 ## Implemented in this mission
 
-P1 items 1–10 are in the tree: derived formula math, `operating` on places, inbound “Connected from”, CSS primitives and print CSS, heading permalinks, canonical examples, `npm run qa`, public editorial/corrections pages, three subagents plus `/add-page`, and deepened bulk fermentation / wheat flour / country loaf. Sour Flour is lineage on `/sour-flour/`, not primary navigation.
+P1 items 1–10 are in the tree: derived formula math, `operating` on places, inbound “Connected from”, CSS primitives and print CSS, heading permalinks, canonical examples, `npm run qa`, public editorial/corrections/reuse pages, three subagents plus `/add-page`, and deepened bulk fermentation / wheat flour / country loaf. Sour Flour is lineage on `/sour-flour/`, not primary navigation. Citation colophon, `llms.txt`, Organization/SearchAction JSON-LD, and CC BY 4.0 followed. HTTPS on the live host remains an ops item ([DISCOVERABILITY.md](DISCOVERABILITY.md)).

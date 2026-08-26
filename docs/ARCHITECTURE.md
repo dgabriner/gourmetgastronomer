@@ -27,4 +27,4 @@ Article pages ship with no required JS. Search loads Pagefind only on `/search/`
 
 ## Hosting notes
 
-`public/.htaccess` copies into `dist/`. Do not force HTTPS until the certificate is valid. Canonical URLs still use `https://gourmetgastronomer.com`.
+`public/.htaccess` copies into `dist/`. Do not force HTTPS until the certificate is valid. Canonical URLs still use `https://gourmetgastronomer.com`. Diagnosed 2026-08-26: HTTP serves the encyclopedia; HTTPS has an untrusted cert and DreamHost’s “Site not found” placeholder (wrong/empty SSL vhost). Panel steps: [DISCOVERABILITY.md](DISCOVERABILITY.md).

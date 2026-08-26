@@ -4,9 +4,33 @@ import type { PageKind } from "./schema";
 
 const SITE = "https://gourmetgastronomer.com";
 
+export const CC_BY_40 = "https://creativecommons.org/licenses/by/4.0/";
+
+export const SITE_DESCRIPTION =
+  "A source-backed food encyclopedia centered on bread, sourdough, practical kitchen skill, and the San Francisco Bay Area food world.";
+
+/** Add the Wikidata QID URL here once an item exists. Do not invent profiles. */
+const ORGANIZATION_SAME_AS: string[] = [];
+
 export function canonicalUrl(path: string): string {
   const url = new URL(path, SITE);
   return url.href;
+}
+
+export function organizationJsonLd(): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${SITE}/#organization`,
+    name: "Gourmet Gastronomer",
+    url: SITE,
+    description: SITE_DESCRIPTION,
+    logo: {
+      "@type": "ImageObject",
+      url: canonicalUrl("/logo.svg"),
+    },
+    ...(ORGANIZATION_SAME_AS.length ? { sameAs: ORGANIZATION_SAME_AS } : {}),
+  };
 }
 
 export function pageTitle(title: string, extras: string[] = []): string {
@@ -35,14 +59,16 @@ export function websiteJsonLd(): Record<string, unknown> {
     "@id": `${SITE}/#website`,
     name: "Gourmet Gastronomer",
     url: SITE,
-    description:
-      "A source-backed food encyclopedia centered on bread, sourdough, practical kitchen skill, and the San Francisco Bay Area food world.",
+    description: SITE_DESCRIPTION,
     inLanguage: "en-US",
-    publisher: {
-      "@type": "Organization",
-      "@id": `${SITE}/#organization`,
-      name: "Gourmet Gastronomer",
-      url: SITE,
+    publisher: { "@id": `${SITE}/#organization` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE}/search/?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
     },
   };
 }
@@ -57,18 +83,10 @@ export function nodeJsonLd(node: GraphNode): Record<string, unknown> | null {
     description: data.summary,
     url,
     mainEntityOfPage: url,
-    isPartOf: {
-      "@type": "WebSite",
-      "@id": `${SITE}/#website`,
-      name: "Gourmet Gastronomer",
-      url: SITE,
-    },
-    author: {
-      "@type": "Organization",
-      "@id": `${SITE}/#organization`,
-      name: "Gourmet Gastronomer",
-      url: SITE,
-    },
+    isPartOf: { "@id": `${SITE}/#website` },
+    author: { "@id": `${SITE}/#organization` },
+    publisher: { "@id": `${SITE}/#organization` },
+    license: CC_BY_40,
     ...(data.updated ? { dateModified: data.updated } : {}),
     ...(data.tags.length ? { keywords: data.tags.join(", ") } : {}),
   };

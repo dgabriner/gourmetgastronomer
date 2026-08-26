@@ -6,7 +6,9 @@ Working static site, schemas, validation, sourdough proof walk, thin cheese / ja
 
 ## Next
 
-- HTTPS on gourmetgastronomer.com
+- HTTPS on gourmetgastronomer.com (certificate / vhost — do not force redirects until `https://` returns 200; see [DISCOVERABILITY.md](DISCOVERABILITY.md))
+- Google Search Console after HTTPS; Wikidata item for the organization, then `sameAs`
+- Deepen citation-magnet pages (DDT cousins, pectin, fermentation, atlas) — do not mass-generate
 - More Bay Area places, still sourced and thin
 - Jam and cheese pathways that reuse canonical pages
 - Professional baking pages only from `docs/PROFESSIONAL-BAKING-MAP.md` plus a research brief — do not mass-generate

@@ -37,6 +37,26 @@ export function illustrationFor(
 ): IllustrationName | null {
   const hay = `${fileId} ${tags.join(" ")}`.toLowerCase();
 
+  if (kind === "place" || fileId.startsWith("atlas/")) {
+    if (
+      hay.includes("san-francisco") ||
+      hay.includes("ferry") ||
+      fileId === "atlas/san-francisco"
+    ) {
+      return "city";
+    }
+    if (fileId.includes("giustos")) return "mill";
+    if (
+      hay.includes("cheese") ||
+      hay.includes("creamery") ||
+      hay.includes("cowgirl") ||
+      hay.includes("point-reyes")
+    ) {
+      return "cheese";
+    }
+    return "pin";
+  }
+
   if (
     hay.includes("jam") ||
     hay.includes("jelly") ||
@@ -48,11 +68,10 @@ export function illustrationFor(
     return "jam";
   }
   if (
-    hay.includes("wine") ||
+    fileId.startsWith("wine/") ||
     hay.includes("grape") ||
     hay.includes("tannin") ||
-    hay.includes("napa") ||
-    hay.includes("sonoma")
+    (hay.includes("wine") && kind !== "place")
   ) {
     return "grape";
   }
@@ -60,9 +79,6 @@ export function illustrationFor(
     hay.includes("cheese") ||
     hay.includes("curd") ||
     hay.includes("affinage") ||
-    hay.includes("creamery") ||
-    hay.includes("cowgirl") ||
-    hay.includes("point-reyes") ||
     hay.includes("coagulation") ||
     hay.includes("rind")
   ) {
@@ -82,13 +98,7 @@ export function illustrationFor(
     return "wheat";
   }
   if (kind === "pathway") return "path";
-  if (
-    kind === "place" ||
-    fileId.startsWith("atlas/") ||
-    hay.includes("san-francisco") ||
-    hay.includes("bay-area") ||
-    hay.includes("ferry")
-  ) {
+  if (hay.includes("san-francisco") || hay.includes("bay-area")) {
     return "city";
   }
   if (

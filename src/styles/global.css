@@ -51,6 +51,7 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -351,6 +352,7 @@ h1 {
   font-style: italic;
   line-height: 1.45;
   text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 .rule {
@@ -606,6 +608,33 @@ h1 {
   font-size: 0.8rem;
 }
 
+.cite-page {
+  margin-top: 0.85rem;
+}
+
+.cite-page summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.citation-label {
+  margin: 0.85rem 0 0.25rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.citation {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--rule);
+  background: var(--paper-light);
+  color: var(--ink);
+  user-select: all;
+}
+
 .cite a {
   text-decoration: none;
   color: var(--accent);
@@ -685,6 +714,10 @@ h1 {
   gap: clamp(1.5rem, 5vw, 4rem);
   align-items: center;
   padding: clamp(2.5rem, 7vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem);
+}
+
+.hero-copy {
+  min-width: 0;
 }
 
 .page-hero {
@@ -1356,6 +1389,11 @@ h1 {
     min-height: 44px;
     align-items: center;
     justify-content: center;
+    padding: 0 0.85rem;
+    border: 1px solid var(--ink);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .nav-panel {
@@ -1496,13 +1534,23 @@ h1 {
     font-size: 1.05rem;
   }
 
+  .wordmark {
+    letter-spacing: 0.1em;
+  }
+
   .wordmark-text span:first-child {
-    max-width: 12rem;
+    max-width: 11rem;
   }
 
   .home-hero h1,
   .page-hero h1 {
-    font-size: clamp(2.7rem, 15vw, 4.2rem);
+    font-size: clamp(2.4rem, 12vw, 3.6rem);
+    max-width: none;
+  }
+
+  .home-hero .lede,
+  .page-hero .lede {
+    font-size: 1.1rem;
   }
 
   .quick-paths,
@@ -1534,6 +1582,18 @@ h1 {
 
   .home-search {
     flex-direction: column;
+  }
+
+  .hero-actions,
+  .bridge-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .button-link,
+  .hero-copy,
+  .lede {
+    max-width: 100%;
   }
 
   .card-visual {

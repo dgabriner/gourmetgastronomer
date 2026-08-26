@@ -22,6 +22,7 @@ test("representative routes exist in dist/", () => {
     "search/index.html",
     "editorial/index.html",
     "corrections/index.html",
+    "reuse/index.html",
     "baking/sourdough/starter/index.html",
     "baking/sourdough/bulk-fermentation/index.html",
     "baking/desired-dough-temperature/index.html",
@@ -86,4 +87,40 @@ test("404 offers catalog discovery", () => {
 test("public trust pages exist", () => {
   assert.match(html("editorial/index.html"), /Editorial standards/);
   assert.match(html("corrections/index.html"), /Corrections/);
+  assert.match(html("reuse/index.html"), /CC BY 4.0/);
+  assert.match(html("about/index.html"), /CC BY 4.0/);
+});
+
+test("citation, license, and machine-discovery signals are in the build", () => {
+  const article = html("baking/desired-dough-temperature/index.html");
+  assert.match(article, /Cite this page/);
+  assert.match(article, /gg:topic:desired-dough-temperature/);
+  assert.match(article, /property="og:type" content="article"/);
+  assert.match(article, /property="og:image"/);
+  assert.match(article, /"@type":"Organization"/);
+  assert.match(article, /rel="license"/);
+
+  const home = html("index.html");
+  assert.match(home, /SearchAction/);
+  assert.match(home, /query-input/);
+  assert.match(home, /href="\/reuse\/"/);
+  assert.match(home, /CC BY 4.0/);
+
+  const robots = html("robots.txt");
+  assert.match(robots, /GPTBot/);
+  assert.match(robots, /PerplexityBot/);
+  assert.match(robots, /Sitemap:/);
+
+  const llms = html("llms.txt");
+  assert.match(llms, /Gourmet Gastronomer/);
+  assert.match(llms, /desired-dough-temperature/);
+  assert.match(llms, /CC BY 4.0/);
+
+  assert.equal(existsSync(join(dist, "og.png")), true, "missing dist/og.png");
+  assert.equal(existsSync(join(dist, "favicon.svg")), true, "missing dist/favicon.svg");
+  assert.equal(
+    existsSync(join(dist, "apple-touch-icon.png")),
+    true,
+    "missing dist/apple-touch-icon.png",
+  );
 });

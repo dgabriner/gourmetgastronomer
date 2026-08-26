@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Gourmet Gastronomer">
+  <rect width="160" height="160" fill="#f6f1e8"/>
+  <g fill="none" stroke="#8c3b18" stroke-width="3">
+    <circle cx="80" cy="80" r="70"/>
+    <path
+      d="M40 96c6-32 28-52 40-52s34 20 40 52c2 12-6 20-20 22H60c-14-2-22-10-20-22Z"
+      fill="#8c3b18"
+      stroke="#5d260f"
+      stroke-width="2"
+    />
+    <path d="M62 62c4 22 6 40 8 52" stroke="#f6f1e8" stroke-width="3"/>
+  </g>
+</svg>

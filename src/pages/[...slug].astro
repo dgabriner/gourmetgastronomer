@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import FocusWindow from "../components/FocusWindow.astro";
+import CitePage from "../components/CitePage.astro";
 import Sources from "../components/Sources.astro";
 import { buildGraph, breadcrumbsFor, focusWindow, groupRelated, inboundRelated, pathwaysContaining, recipesUsing } from "../lib/graph";
 import { citedAndFurther, headingsFromMarkdown, renderBody, resolverFromMaps } from "../lib/markdown";
@@ -10,6 +11,7 @@ import { canonicalUrl, eyebrowFor, nodeJsonLd, pageTitle } from "../lib/jsonld";
 import { kindLabel, rootLabel, rootOf } from "../lib/paths";
 import type { PageKind } from "../lib/schema";
 import MediaFigure from "../components/MediaFigure.astro";
+import PracticeBridge from "../components/PracticeBridge.astro";
 import { illustrationFor } from "../lib/illustration";
 
 export async function getStaticPaths() {
@@ -131,6 +133,14 @@ const pctMax = formula
         .filter((value): value is number => value != null),
     )
   : 100;
+const practiceBridgePages = new Set([
+  "baking/sourdough",
+  "baking/sourdough/san-francisco-sourdough",
+  "baking/sourdough/starter",
+  "learn/sourdough",
+  "recipes/country-loaf",
+]);
+const showPracticeBridge = practiceBridgePages.has(node.fileId);
 ---
 <Base
   title={pageTitle(node.data.title, root ? [rootLabel(root)] : [])}
@@ -140,6 +150,8 @@ const pctMax = formula
   jsonLd={nodeJsonLd(node)}
   currentNav={root === "baking" || root === "atlas" || root === "learn" ? root : "catalog"}
   skipSectionNav={false}
+  ogType="article"
+  shareImage={null}
 >
   <div class="page-grid">
     <article class="folio" id="main" data-pagefind-body>
@@ -361,10 +373,14 @@ const pctMax = formula
 
       <Sources cited={sourceLists.cited} further={sourceLists.further} />
 
-      <p class="colophon" data-pagefind-ignore>
-        {node.data.updated ? `Updated ${node.data.updated}. ` : ""}
-        {node.data.id}
-      </p>
+      {showPracticeBridge && <PracticeBridge />}
+
+      <CitePage
+        title={node.data.title}
+        url={canonicalUrl(node.url)}
+        id={node.data.id}
+        updated={node.data.updated}
+      />
     </article>
     <FocusWindow window={focus} headings={headings} related={relatedGroups} />
   </div>

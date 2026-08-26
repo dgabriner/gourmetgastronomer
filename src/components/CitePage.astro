@@ -1,0 +1,35 @@
+---
+import {
+  apaCitation,
+  chicagoCitation,
+  recommendedCitation,
+} from "../lib/cite";
+
+interface Props {
+  title: string;
+  url: string;
+  id: string;
+  updated?: string;
+}
+
+const { title, url, id, updated } = Astro.props;
+const input = { title, url, id, updated };
+---
+<div class="colophon" data-pagefind-ignore>
+  <p>
+    {updated ? `Updated ${updated}. ` : ""}
+    {id}
+    {" · "}
+    <a href="/reuse/">CC BY 4.0</a>
+  </p>
+  <details class="cite-page">
+    <summary>Cite this page</summary>
+    <p>Cite the dated version. The live page may change.</p>
+    <p class="citation-label">Recommended</p>
+    <p class="citation">{recommendedCitation(input)}</p>
+    <p class="citation-label">Chicago</p>
+    <p class="citation">{chicagoCitation(input)}</p>
+    <p class="citation-label">APA</p>
+    <p class="citation">{apaCitation(input)}</p>
+  </details>
+</div>

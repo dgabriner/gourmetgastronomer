@@ -19,4 +19,6 @@ npm run report:graph
 npm run suggest:links
 ```
 
+Original encyclopedia prose is [CC BY 4.0](LICENSE). How to reuse and cite: the `/reuse/` page, or [docs/DISCOVERABILITY.md](docs/DISCOVERABILITY.md).
+
 Read [docs/VISION.md](docs/VISION.md), [docs/EDITORIAL.md](docs/EDITORIAL.md), and [AGENTS.md](AGENTS.md) before adding pages. Research workflow: [docs/RESEARCH-WORKFLOW.md](docs/RESEARCH-WORKFLOW.md).
