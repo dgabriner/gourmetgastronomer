@@ -14,6 +14,8 @@ This site is not a Sour Flour marketing site. The lineage is:
 
 **Gourmet Gastronomer → exploration and food education → deep bread knowledge → Sour Flour**
 
+Lineage is recorded on About and `/sour-flour/`. The site uses a bounded knowledge-to-practice bridge on the homepage, in the footer, and on a small number of bread pages where the next action is genuinely useful. It is not a storefront and not a global-nav item.
+
 ## Non-goals
 
 User accounts, comments, personalization engines, a CMS as source of truth, e-commerce, and mass-generated empty pages.

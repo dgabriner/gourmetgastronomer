@@ -1104,6 +1104,10 @@ h1 {
   background: var(--paper-light);
   border-radius: 50%;
   color: var(--accent);
+  font-family: system-ui, "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
 }
 
 .sf-mark .illustration {
@@ -1212,7 +1216,8 @@ h1 {
   cursor: pointer;
 }
 
-.sour-flour-bridge {
+.sour-flour-bridge,
+.practice-bridge {
   max-width: var(--measure);
   margin-top: 3rem;
   padding: 1.5rem;
@@ -1220,12 +1225,14 @@ h1 {
   background: var(--paper-deep);
 }
 
-.sour-flour-bridge h2 {
+.sour-flour-bridge h2,
+.practice-bridge h2 {
   margin: 0 0 0.6rem;
   font-size: clamp(1.5rem, 3vw, 2rem);
 }
 
-.sour-flour-bridge > p:not(.eyebrow) {
+.sour-flour-bridge > p:not(.eyebrow),
+.practice-bridge > p:not(.eyebrow) {
   margin: 0 0 1rem;
 }
 

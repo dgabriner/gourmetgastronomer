@@ -1,52 +1,114 @@
 ---
 import Base from "../layouts/Base.astro";
 import MediaFigure from "../components/MediaFigure.astro";
+
+const projectJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Gourmet Gastronomer and Sour Flour",
+  description:
+    "How Gourmet Gastronomer's bread knowledge connects to Sour Flour's hands-on bread learning and baking in San Francisco.",
+  url: "https://gourmetgastronomer.com/sour-flour/",
+  about: {
+    "@type": "Organization",
+    name: "Sour Flour",
+    url: "https://sourflour.org/",
+  },
+};
 ---
 <Base
-  title="Lineage — Gourmet Gastronomer and Sour Flour"
-  description="How Gourmet Gastronomer relates to Sour Flour: historical lineage, not a storefront."
+  title="Gourmet Gastronomer and Sour Flour — Knowledge into practice"
+  description="How Gourmet Gastronomer's bread knowledge connects to Sour Flour's courses, bread, starter, flour, and help in San Francisco."
   permalink="/sour-flour/"
-  crumbs={[{ name: "Lineage", url: "/sour-flour/" }]}
+  crumbs={[{ name: "Sour Flour", url: "/sour-flour/" }]}
+  jsonLd={projectJsonLd}
 >
-  <main class="home" id="main">
+  <main class="home sour-flour-page" id="main">
     <header class="page-hero">
       <div>
-        <p class="eyebrow">Lineage</p>
+        <p class="eyebrow">Knowledge → practice</p>
         <h1>Gourmet Gastronomer and Sour Flour</h1>
         <p class="lede">
-          This encyclopedia is independent knowledge work. Sour Flour is a later,
-          real-world expression of one slice of the same idea.
+          Gourmet Gastronomer maps the food world. Sour Flour is where one part
+          of that map—bread—becomes hands-on learning, baking, and community in
+          San Francisco.
         </p>
       </div>
       <MediaFigure name="loaf" />
     </header>
-    <div class="prose">
-      <p>
-        Gourmet Gastronomer existed as an idea before Sour Flour: learn food
-        deeply enough that the world of food becomes more interesting, then
-        make that knowledge usable. Sour Flour grew out of the bread portion of
-        that project — teaching, baking, and community in San Francisco. It is
-        not the parent of this site, and this site is not a Sour Flour catalog.
-      </p>
-      <p>
-        Bread knowledge here lives on canonical pages: the
-        <a href="/learn/sourdough/">sourdough pathway</a>,
-        <a href="/baking/sourdough/starter/">starters</a>,
-        <a href="/baking/sourdough/bulk-fermentation/">fermentation</a>,
-        and the teaching
-        <a href="/recipes/country-loaf/">country loaf</a>.
-        For current classes, bread, or pickup, use Sour Flour’s own site.
-        Hours and offers change; we do not mirror them.
-      </p>
-      <p>
-        <a href="/learn/sourdough/">Learn sourdough</a>
-        {" · "}
-        <a href="/recipes/country-loaf/">Country loaf</a>
-        {" · "}
-        <a href="/about/">About this encyclopedia</a>
-        {" · "}
-        <a href="https://sourflour.org/">sourflour.org</a>
-      </p>
-    </div>
+
+    <section class="connection-section" aria-labelledby="how-projects-connect">
+      <div>
+        <p class="section-kicker">A shared lineage, two clear jobs</p>
+        <h2 id="how-projects-connect">How the projects connect</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Gourmet Gastronomer existed first as an idea: learn food deeply
+          enough that it becomes more interesting, then make that knowledge
+          useful. Sour Flour grew from the bread portion of that work—teaching,
+          baking, and community in San Francisco.
+        </p>
+        <p>
+          The encyclopedia holds durable explanations, formulas, references,
+          and pathways. Sour Flour holds the current, real-world ways to learn,
+          get bread, work with starter and flour, or ask for help. Because
+          schedules and offers change, their current details stay on their own
+          site.
+        </p>
+      </div>
+    </section>
+
+    <section class="action-section module" aria-labelledby="read-practice">
+      <p class="section-kicker">Choose the next useful action</p>
+      <h2 id="read-practice">Read here. Practice there.</h2>
+      <div class="action-grid">
+        <article class="action-card">
+          <p class="card-number">01</p>
+          <h3>Learn sourdough</h3>
+          <p>Build the concepts in order, then move into a live learning setting when you are ready.</p>
+          <div class="card-links">
+            <a href="/learn/sourdough/">Read the sourdough pathway</a>
+            <a href="https://sourflour.org/baking-courses/">See Sour Flour baking courses <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="action-card">
+          <p class="card-number">02</p>
+          <h3>Bake or get bread</h3>
+          <p>Use the country loaf as a teaching formula, or see what Sour Flour is baking now.</p>
+          <div class="card-links">
+            <a href="/recipes/country-loaf/">Use the country loaf formula</a>
+            <a href="https://sourflour.org/breads/">Explore Sour Flour breads <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="action-card">
+          <p class="card-number">03</p>
+          <h3>Work with starter and flour</h3>
+          <p>Understand the living culture first, then find the practical materials to continue.</p>
+          <div class="card-links">
+            <a href="/baking/sourdough/starter/">Understand sourdough starter</a>
+            <a href="https://sourflour.org/starter-flour/">Get starter and flour <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="action-card">
+          <p class="card-number">04</p>
+          <h3>Troubleshoot a loaf</h3>
+          <p>Read the common failure modes, then use the hotline when the problem needs a human conversation.</p>
+          <div class="card-links">
+            <a href="/baking/sourdough/troubleshooting/">Open the troubleshooting guide</a>
+            <a href="https://sourflour.org/sour-flour-hotline/">Use the Sour Flour Hotline <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="sour-flour-cta" aria-labelledby="visit-sour-flour">
+      <div>
+        <p class="eyebrow">Current bread-world offerings</p>
+        <h2 id="visit-sour-flour">Take the next step with Sour Flour</h2>
+        <p>Courses, bread, starter, flour, and practical help live on Sour Flour’s current site.</p>
+      </div>
+      <a class="button-link button-light" href="https://sourflour.org/">Visit sourflour.org <span aria-hidden="true">↗</span></a>
+    </section>
   </main>
 </Base>

@@ -20,6 +20,7 @@ test("representative routes exist in dist/", () => {
     "index.html",
     "404.html",
     "search/index.html",
+    "sour-flour/index.html",
     "editorial/index.html",
     "corrections/index.html",
     "reuse/index.html",
@@ -36,12 +37,14 @@ test("representative routes exist in dist/", () => {
   }
 });
 
-test("home is the encyclopedia, not a Sour Flour funnel", () => {
+test("home keeps the encyclopedia primary and provides a bounded Sour Flour bridge", () => {
   const home = html("index.html");
   assert.match(home, /Gourmet Gastronomer/);
   assert.match(home, /href="\/learn\/sourdough\/"/);
-  assert.doesNotMatch(home, /Take it into practice with Sour Flour/);
-  assert.doesNotMatch(home, /href="\/sour-flour\/"[^>]*>Sour Flour/);
+  assert.match(home, /class="sour-flour-feature"/);
+  assert.match(home, /href="\/sour-flour\/"/);
+  const primaryNav = home.match(/<nav class="primary-nav"[\s\S]*?<\/nav>/)?.[0] ?? "";
+  assert.doesNotMatch(primaryNav, /href="\/sour-flour\/"/);
 });
 
 test("article pages have canonical URLs, skip links, and no app JS", () => {
@@ -52,7 +55,25 @@ test("article pages have canonical URLs, skip links, and no app JS", () => {
   assert.match(article, /class="permalink"/);
   assert.match(article, /Connected from|Referenced from|Related topics/);
   assert.doesNotMatch(article, /<script src=/);
-  assert.doesNotMatch(article, /Continue with Sour Flour/);
+  assert.doesNotMatch(article, /class="practice-bridge"/);
+});
+
+test("Sour Flour bridges appear only on high-intent bread pages", () => {
+  const starter = html("baking/sourdough/starter/index.html");
+  const generalArticle = html("baking/sourdough/bulk-fermentation/index.html");
+  const bridge = html("sour-flour/index.html");
+  assert.match(starter, /class="practice-bridge"/);
+  assert.doesNotMatch(generalArticle, /class="practice-bridge"/);
+  assert.match(bridge, /baking-courses/);
+  assert.match(bridge, /starter-flour/);
+  assert.match(bridge, /sour-flour-hotline/);
+});
+
+test("detail pages do not reuse the site-wide social card", () => {
+  const article = html("baking/sourdough/starter/index.html");
+  assert.doesNotMatch(article, /property="og:image"/);
+  assert.doesNotMatch(article, /name="twitter:image"/);
+  assert.match(article, /property="og:type" content="article"/);
 });
 
 test("country loaf renders a formula table and recipe structured data", () => {
@@ -96,11 +117,12 @@ test("citation, license, and machine-discovery signals are in the build", () => 
   assert.match(article, /Cite this page/);
   assert.match(article, /gg:topic:desired-dough-temperature/);
   assert.match(article, /property="og:type" content="article"/);
-  assert.match(article, /property="og:image"/);
+  assert.doesNotMatch(article, /property="og:image"/);
   assert.match(article, /"@type":"Organization"/);
   assert.match(article, /rel="license"/);
 
   const home = html("index.html");
+  assert.match(home, /property="og:image"/);
   assert.match(home, /SearchAction/);
   assert.match(home, /query-input/);
   assert.match(home, /href="\/reuse\/"/);

@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import FocusWindow from "../components/FocusWindow.astro";
 import CitePage from "../components/CitePage.astro";
+import PracticeBridge from "../components/PracticeBridge.astro";
 import Sources from "../components/Sources.astro";
 import { buildGraph, breadcrumbsFor, focusWindow, groupRelated, inboundRelated, pathwaysContaining, recipesUsing } from "../lib/graph";
 import { citedAndFurther, headingsFromMarkdown, renderBody, resolverFromMaps } from "../lib/markdown";
@@ -11,7 +12,6 @@ import { canonicalUrl, eyebrowFor, nodeJsonLd, pageTitle } from "../lib/jsonld";
 import { kindLabel, rootLabel, rootOf } from "../lib/paths";
 import type { PageKind } from "../lib/schema";
 import MediaFigure from "../components/MediaFigure.astro";
-import PracticeBridge from "../components/PracticeBridge.astro";
 import { illustrationFor } from "../lib/illustration";
 
 export async function getStaticPaths() {
