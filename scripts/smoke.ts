@@ -54,8 +54,27 @@ test("article pages have canonical URLs, skip links, and no app JS", () => {
   assert.match(article, /id="section-nav"/);
   assert.match(article, /class="permalink"/);
   assert.match(article, /Connected from|Referenced from|Related topics/);
-  assert.doesNotMatch(article, /<script src=/);
+  assert.doesNotMatch(article, /src="\/_astro\//);
+  assert.doesNotMatch(article, /<script type="module"/);
   assert.doesNotMatch(article, /class="practice-bridge"/);
+});
+
+test("every HTML page loads gourmetgastronomer.com GA4, not Sour Flour tags", () => {
+  for (const rel of [
+    "index.html",
+    "404.html",
+    "search/index.html",
+    "sour-flour/index.html",
+    "baking/sourdough/bulk-fermentation/index.html",
+    "recipes/country-loaf/index.html",
+    "catalog/index.html",
+  ]) {
+    const page = html(rel);
+    assert.match(page, /<head[\s\S]*gtag\/js\?id=G-VHKXQ1LFW8[\s\S]*<\/head>/);
+    assert.match(page, /gtag\('config', 'G-VHKXQ1LFW8'\)/);
+    assert.doesNotMatch(page, /G-FEZ1KFZKPK/);
+    assert.doesNotMatch(page, /GT-5MGVGM88/);
+  }
 });
 
 test("Sour Flour bridges appear only on high-intent bread pages", () => {

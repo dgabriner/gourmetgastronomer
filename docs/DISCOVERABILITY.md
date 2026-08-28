@@ -4,7 +4,7 @@ How Gourmet Gastronomer becomes visited and cited without becoming a recipe-SEO 
 
 The model is a specialist encyclopedia: unique, source-backed answers that are legally and mechanically easy to quote. Google traffic, human citations, and AI citations are consequences of that. They are not a separate marketing layer.
 
-See [VISION.md](VISION.md), [EDITORIAL.md](EDITORIAL.md), and [BENCHMARKS.md](BENCHMARKS.md). Do not add share walls, comments, newsletter popups, Google Analytics, FAQ schema spam, mass-generated stubs, or Wikipedia linkspam.
+See [VISION.md](VISION.md), [EDITORIAL.md](EDITORIAL.md), and [BENCHMARKS.md](BENCHMARKS.md). Do not add share walls, comments, newsletter popups, GTM, cookie banners, ads, FAQ schema spam, mass-generated stubs, or Wikipedia linkspam.
 
 ## License
 
@@ -66,7 +66,9 @@ After HTTPS returns 200:
 3. Submit `https://gourmetgastronomer.com/sitemap-index.xml`.
 4. Optional: Bing Webmaster Tools, same sitemap.
 
-Do not add Google Analytics. Search Console is enough to know whether the encyclopedia is being found.
+## Analytics
+
+GA4 measurement ID `G-VHKXQ1LFW8` (property gourmetgastronomer.com) ships from [`src/layouts/Base.astro`](../src/layouts/Base.astro) on every HTML page, including apex and www. Do not add GTM, a second Google tag, cookie banners, or Sour Flour bakery IDs (`G-FEZ1KFZKPK`, `GT-5MGVGM88`). Search Console remains the source for search impressions and queries.
 
 ## Off-site entity (after HTTPS)
 
